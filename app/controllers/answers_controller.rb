@@ -1,8 +1,10 @@
+# frozen_string_literal: true
+
 class AnswersController < ApplicationController
   def create
     @answer = question.answers.new(answer_params)
 
-    if @answer.save then
+    if @answer.save
       redirect_to [question, @answer]
     else
       render :new
