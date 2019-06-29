@@ -2,7 +2,7 @@
 
 require 'rails_helper'
 
-RSpec.describe 'Questions', type: :acceptance do
+RSpec.describe 'Questions', type: :features do
   scenario 'User can create a Question'
   scenario "Unauthorized user can't create a Question"
   scenario 'User can see list of questions'
