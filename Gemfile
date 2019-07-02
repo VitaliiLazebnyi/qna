@@ -38,6 +38,8 @@ gem 'jbuilder', '~> 2.5'
 # Reduces boot times through caching; required in config/boot.rb
 gem 'bootsnap', '>= 1.1.0', require: false
 
+gem 'slim'
+
 gem 'devise'
 
 group :development, :test do
