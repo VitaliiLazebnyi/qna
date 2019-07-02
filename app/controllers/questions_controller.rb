@@ -5,6 +5,10 @@ class QuestionsController < ApplicationController
     @questions = Question.all
   end
 
+  def new
+    @question = Question.new
+  end
+
   def create
     @question = Question.new(question_params)
 
@@ -13,6 +17,10 @@ class QuestionsController < ApplicationController
     else
       render :new
     end
+  end
+
+  def show
+    @question = Question.find(params[:id])
   end
 
   private
