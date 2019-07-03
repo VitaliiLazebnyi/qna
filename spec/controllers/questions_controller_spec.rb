@@ -4,8 +4,11 @@ require 'rails_helper'
 
 RSpec.describe QuestionsController, type: :controller do
   describe 'POST #create' do
+    let(:user) { create(:user) }
+    before { login(user) }
+
     context 'with valid parameters' do
-      let(:question) { FactoryBot.attributes_for(:question) }
+      let(:question) { attributes_for(:question) }
 
       it 'saves new question to database' do
         expect { post :create, params: { question: question } }
@@ -19,7 +22,7 @@ RSpec.describe QuestionsController, type: :controller do
     end
 
     context 'with invalid parameters' do
-      let(:question) { FactoryBot.attributes_for(:question, title: nil, body: nil) }
+      let(:question) { attributes_for(:question, title: nil, body: nil) }
 
       it 'saves new question to database' do
         expect { post :create, params: { question: question } }

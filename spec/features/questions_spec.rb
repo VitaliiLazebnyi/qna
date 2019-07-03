@@ -11,10 +11,7 @@ feature 'User can create questions', '
   given(:question) { FactoryBot.build(:question) }
 
   scenario 'authenticated user creates a question' do
-    visit new_user_session_path
-    fill_in 'Email', with: user.email
-    fill_in 'Password', with: user.password
-    click_on 'Log in'
+    login user
 
     visit questions_path
     click_on 'Ask question'
@@ -28,22 +25,22 @@ feature 'User can create questions', '
   end
 
   scenario 'authenticated user creates a question with errors' do
-    visit new_user_session_path
-    fill_in 'Email', with: user.email
-    fill_in 'Password', with: user.password
-    click_on 'Log in'
+    login user
 
     visit questions_path
     click_on 'Ask question'
     click_on :create
 
-    expect(page).to have_content 'Errors'
-    expect(page).to have_content "Title can't be empty"
-    expect(page).to have_content "Body can't be empty"
+    expect(page).to have_content 'error'
+    expect(page).to have_content "Title can't be blank"
+    expect(page).to have_content "Body can't be blank"
   end
 
   scenario 'unauthenticated user creates a question' do
+    visit questions_path
+    click_on 'Ask question'
 
+    expect(page).to have_content 'You need to sign in or sign up before continuing.'
   end
 
   # scenario 'User can create a Question'

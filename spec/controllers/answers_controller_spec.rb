@@ -4,10 +4,10 @@ require 'rails_helper'
 
 RSpec.describe AnswersController, type: :controller do
   describe 'POST #create' do
-    let!(:question) { FactoryBot.create(:question) }
+    let!(:question) { create(:question) }
 
     context 'with valid parameters' do
-      let(:answer) { FactoryBot.attributes_for(:answer) }
+      let(:answer) { attributes_for(:answer) }
 
       it 'saves new answer to database' do
         expect { post :create, params: { answer: answer, question_id: question.id } }
@@ -23,7 +23,7 @@ RSpec.describe AnswersController, type: :controller do
     end
 
     context 'with invalid parameters' do
-      let(:answer) { FactoryBot.attributes_for(:answer, body: nil) }
+      let(:answer) { attributes_for(:answer, body: nil) }
 
       it 'saves new answer to database' do
         expect { post :create, params: { answer: answer, question_id: question.id } }
