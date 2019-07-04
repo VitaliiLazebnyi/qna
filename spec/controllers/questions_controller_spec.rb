@@ -3,6 +3,64 @@
 require 'rails_helper'
 
 RSpec.describe QuestionsController, type: :controller do
+  describe 'GET #index' do
+    it 'loads questions from database' do
+      question = create(:question)
+      get :index
+      expect(assigns(:questions)).to eq([question])
+    end
+
+    it 'renders proper page' do
+      get :index
+      expect(response).to render_template :index
+    end
+  end
+
+  describe 'GET #new' do
+    let(:user) { create(:user) }
+    before { login(user) }
+
+    it 'allocates question variable' do
+      get :new
+      expect(assigns(:question)).to be_instance_of(Question)
+    end
+
+    it 'renders proper page' do
+      get :new
+      expect(response).to render_template :new
+    end
+  end
+
+  describe 'GET #edit' do
+    let(:question) { create(:question) }
+    let(:user) { create(:user) }
+    before { login(user) }
+
+    it 'allocates question variable' do
+      get :edit, params: { id: question.id }
+      expect(assigns(:question)).to eq question
+    end
+
+    it 'renders proper page' do
+      get :edit, params: { id: question.id }
+      expect(response).to render_template :edit
+    end
+  end
+
+  describe 'GET #show' do
+    let(:question) { create(:question) }
+
+    it 'allocates question variable' do
+      get :show, params: { id: question.id }
+      expect(assigns(:question)).to eq question
+    end
+
+    it 'renders proper page' do
+      get :show, params: { id: question.id }
+      expect(response).to render_template :show
+    end
+  end
+
   describe 'POST #create' do
     let(:user) { create(:user) }
     before { login(user) }
@@ -24,7 +82,7 @@ RSpec.describe QuestionsController, type: :controller do
     context 'with invalid parameters' do
       let(:question) { attributes_for(:question, title: nil, body: nil) }
 
-      it 'saves new question to database' do
+      it 'not saves new question to database' do
         expect { post :create, params: { question: question } }
           .to_not change(Question, :count)
       end
