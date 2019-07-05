@@ -20,7 +20,7 @@ RSpec.describe AnswersController, type: :controller do
 
       it 'redirects to view page' do
         post :create, params: { answer: answer, question_id: question.id }
-        expect(response).to redirect_to [question, assigns(:answer)]
+        expect(response).to redirect_to question
       end
     end
 
@@ -34,7 +34,7 @@ RSpec.describe AnswersController, type: :controller do
 
       it 'displays new template' do
         post :create, params: { answer: answer, question_id: question.id }
-        expect(response).to render_template :new
+        expect(response).to redirect_to question
       end
     end
   end

@@ -1,1 +1,5 @@
-p= answer.body
+- if answer&.body&.present?
+    p
+      = answer.body
+      - if answer&.user == current_user
+        = link_to "Delete answer", [answer.question, answer], remote: true, method: :delete

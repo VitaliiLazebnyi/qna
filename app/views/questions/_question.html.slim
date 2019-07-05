@@ -2,4 +2,4 @@ h1= @question.title
 p= @question.body
 
 - if current_user == @question.user
-  = link_to 'Delete', question_path(@question), method: :delete
+  = link_to 'Delete question', question_path(@question), method: :delete

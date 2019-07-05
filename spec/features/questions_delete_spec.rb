@@ -15,7 +15,7 @@ feature 'User can remove a question', '
     login owner
     visit question_path(question)
 
-    click_on 'Delete'
+    click_on 'Delete question'
 
     expect(page).to have_content 'Your question was successfully removed.'
     expect(page).to_not have_content question.title
@@ -25,11 +25,11 @@ feature 'User can remove a question', '
   scenario "user can't remove others questions" do
     login user
     visit question_path(question)
-    expect(page).to_not have_content 'Delete'
+    expect(page).to_not have_content 'Delete question'
   end
 
   scenario "visitor can't remove a question" do
     visit question_path(question)
-    expect(page).to_not have_content 'Delete'
+    expect(page).to_not have_content 'Delete question'
   end
 end

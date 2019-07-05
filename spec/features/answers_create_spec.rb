@@ -31,8 +31,7 @@ feature 'User can answer the question', '
     visit question_path(question)
     click_on :answer
 
-    expect(page).to have_content 'error'
-    expect(page).to have_content "Body can't be blank"
+    expect(page).to have_content "Error: answer can't be empty."
   end
 
   scenario 'unauthenticated user creates a question' do
