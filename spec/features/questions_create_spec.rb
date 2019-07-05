@@ -39,11 +39,6 @@ feature 'User can create questions', '
   scenario 'unauthenticated user creates a question' do
     visit questions_path
     click_on 'Ask question'
-
     expect(page).to have_content 'You need to sign in or sign up before continuing.'
   end
-
-  # scenario 'User can see the Questions and its answers.'
-  # scenario 'User can remove his question'
-  # scenario "User can't remove others questions"
 end
