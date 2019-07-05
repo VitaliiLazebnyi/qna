@@ -81,7 +81,7 @@ RSpec.describe QuestionsController, type: :controller do
     end
 
     context 'with invalid parameters' do
-      let(:question) { attributes_for(:question, title: nil, body: nil) }
+      let!(:question) { attributes_for(:question, title: nil, body: nil) }
 
       it 'not saves new question to database' do
         expect { post :create, params: { question: question } }
@@ -96,22 +96,122 @@ RSpec.describe QuestionsController, type: :controller do
   end
 
   describe 'POST #update' do
+    let(:owner) { create(:user) }
+    let!(:question) { create(:question, user: owner) }
+    let(:question_params) { attributes_for(:question, title: 'Updated title', body: 'Updated body') }
+    let(:question_invalid_params) { attributes_for(:question, title: nil, body: nil) }
+
     context 'can update his own questions' do
-      let(:user) { create(:user) }
-      before { login(user) }
-      let(:question) { create(:question, user: user) }
+      before { login(owner) }
+
+      it 'keeps questions number same' do
+        expect { patch :update, params: { id: question.id, question: question_params } }
+          .to_not change(Question, :count)
+      end
+
+      it 'redirects to view page' do
+        patch :update, params: { id: question.id, question: question_params }
+        expect(response).to redirect_to assigns(:question)
+      end
     end
 
     context "can't update his questions with invalid parameters" do
+      before { login(owner) }
 
+      it 'keeps questions number same' do
+        expect { patch :update, params: { id: question.id, question: question_invalid_params } }
+          .to_not change(Question, :count)
+      end
+
+      it 'redirects to view page' do
+        patch :update, params: { id: question.id, question: question_invalid_params }
+        expect(response).to render_template :new
+      end
     end
 
     context "can't update others questions" do
+      let(:user) { create(:user) }
+      before { login(user) }
 
+      it 'keeps questions number same' do
+        expect { patch :update, params: { id: question.id, question: question_params } }
+          .to_not change(Question, :count)
+      end
+
+      it 'redirects to forbidden page' do
+        patch :update, params: { id: question.id, question: question_params }
+        # TODO: i am not sure how correctly check rendered template here
+        expect(response).to render_template nil
+      end
+
+      it 'returns forbidden http status code' do
+        patch :update, params: { id: question.id, question: question_params }
+        expect(response).to have_http_status(403)
+      end
     end
 
     context "visitor can't edit questions" do
+      it 'keeps questions number same' do
+        expect { patch :update, params: { id: question.id, question: question_params } }
+          .to_not change(Question, :count)
+      end
 
+      it 'redirects to view page' do
+        patch :update, params: { id: question.id, question: question_params }
+        expect(response).to redirect_to new_user_session_path
+      end
+    end
+  end
+
+  describe 'POST #delete' do
+    let(:owner) { create(:user) }
+    let!(:question) { create(:question, user: owner) }
+
+    context 'can delete his own questions' do
+      before { login(owner) }
+
+      it 'keeps questions number same' do
+        expect { delete :destroy, params: { id: question.id } }
+          .to change(Question, :count).by(-1)
+      end
+
+      it 'redirects to view page' do
+        delete :destroy, params: { id: question.id }
+        expect(response).to redirect_to questions_path
+      end
+    end
+
+    context "can't delete others questions" do
+      let(:user) { create(:user) }
+      before { login(user) }
+
+      it 'keeps questions number same' do
+        expect { delete :destroy, params: { id: question.id } }
+          .to_not change(Question, :count)
+      end
+
+      it 'redirects to view page' do
+        delete :destroy, params: { id: question.id }
+        # TODO: i am not sure how correctly check rendered template here
+        expect(response).to render_template nil
+      end
+
+      it 'returns forbidden http status code' do
+        delete :destroy, params: { id: question.id }
+        expect(response).to have_http_status(403)
+      end
+    end
+
+    context "visitor can't edit questions" do
+      it 'keeps questions number same' do
+        expect { delete :destroy, params: { id: question.id } }
+          .to_not change(Question, :count)
+      end
+
+      it 'redirects to view page' do
+        delete :destroy, params: { id: question.id }
+        expect(response).to redirect_to new_user_session_path
+      end
     end
   end
 end

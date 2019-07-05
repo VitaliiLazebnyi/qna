@@ -2,6 +2,8 @@
 
 class QuestionsController < ApplicationController
   before_action :authenticate_user!, except: %i[index show]
+  before_action :load_question, except: %i[index new create]
+  before_action :check_user_permissions, except: %i[index new show create]
 
   def index
     @questions = Question.all
@@ -21,11 +23,39 @@ class QuestionsController < ApplicationController
     end
   end
 
-  def show
-    @question = Question.find(params[:id])
+  def edit; end
+
+  def show; end
+
+  def update
+    if @question.update(question_params)
+      redirect_to @question, notice: 'Your question was successfully updated.'
+    else
+      render :new
+    end
+  end
+
+  def destroy
+    if @question.destroy
+      redirect_to questions_path, notice: 'Your question was successfully removed.'
+    else
+      redirect_to @question
+    end
   end
 
   private
+
+  def check_user_permissions
+    return if @question&.user == current_user
+
+    render file: File.join(Rails.root, 'public/403.html'),
+           status: 403,
+           layout: false
+  end
+
+  def load_question
+    @question = Question.find(params[:id])
+  end
 
   def question_params
     params.require(:question).permit(:title, :body)
