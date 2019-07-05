@@ -7,8 +7,8 @@ feature 'User can create questions', '
   User can ask questions
 ' do
 
-  given(:user)     { FactoryBot.create(:user) }
-  given(:question) { FactoryBot.build(:question) }
+  given(:user)     { create(:user) }
+  given(:question) { build(:question) }
 
   scenario 'authenticated user creates a question' do
     login user
