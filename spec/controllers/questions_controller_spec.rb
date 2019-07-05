@@ -5,7 +5,7 @@ require 'rails_helper'
 RSpec.describe QuestionsController, type: :controller do
   describe 'GET #index' do
     it 'loads questions from database' do
-      question = create(:question)
+      question = create(:question, user: create(:user))
       get :index
       expect(assigns(:questions)).to eq([question])
     end
@@ -32,8 +32,8 @@ RSpec.describe QuestionsController, type: :controller do
   end
 
   describe 'GET #edit' do
-    let(:question) { create(:question) }
     let(:user) { create(:user) }
+    let(:question) { create(:question, user: user) }
     before { login(user) }
 
     it 'allocates question variable' do
@@ -48,7 +48,8 @@ RSpec.describe QuestionsController, type: :controller do
   end
 
   describe 'GET #show' do
-    let(:question) { create(:question) }
+    let(:user) { create(:user) }
+    let(:question) { create(:question, user: user) }
 
     it 'allocates question variable' do
       get :show, params: { id: question.id }

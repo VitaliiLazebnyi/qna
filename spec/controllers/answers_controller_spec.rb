@@ -4,7 +4,9 @@ require 'rails_helper'
 
 RSpec.describe AnswersController, type: :controller do
   describe 'POST #create' do
-    let!(:question) { create(:question) }
+    let(:user) { create(:user) }
+    let!(:question) { create(:question, user: user) }
+    before { login(user) }
 
     context 'with valid parameters' do
       let(:answer) { attributes_for(:answer) }
