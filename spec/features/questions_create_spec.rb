@@ -43,9 +43,6 @@ feature 'User can create questions', '
     expect(page).to have_content 'You need to sign in or sign up before continuing.'
   end
 
-  # scenario 'User can create a Question'
-  # scenario "Unauthorized user can't create a Question"
-  # scenario 'User can see list of questions'
   # scenario 'User can see the Questions and its answers.'
   # scenario 'User can remove his question'
   # scenario "User can't remove others questions"
