@@ -93,4 +93,24 @@ RSpec.describe QuestionsController, type: :controller do
       end
     end
   end
+
+  describe 'POST #update' do
+    context 'can update his own questions' do
+      let(:user) { create(:user) }
+      before { login(user) }
+      let(:question) { create(:question, user: user) }
+    end
+
+    context "can't update his questions with invalid parameters" do
+
+    end
+
+    context "can't update others questions" do
+
+    end
+
+    context "visitor can't edit questions" do
+
+    end
+  end
 end
