@@ -2,6 +2,8 @@
 
 class AnswersController < ApplicationController
   before_action :authenticate_user!
+  before_action :load_answer,            only: :destroy
+  before_action :check_user_permissions, only: :destroy
 
   def create
     question = Question.find(params[:question_id])
@@ -15,10 +17,6 @@ class AnswersController < ApplicationController
   end
 
   def destroy
-    @answer = Answer.find(params[:id])
-
-    check_user_permissions
-
     if @answer.destroy
       redirect_to @answer.question, notice: 'Your answer was successfully removed.'
     else
@@ -27,6 +25,10 @@ class AnswersController < ApplicationController
   end
 
   private
+
+  def load_answer
+    @answer = Answer.find(params[:id])
+  end
 
   def check_user_permissions
     return if current_user.author_of?(@answer)
