@@ -1,4 +1,4 @@
 - if current_user
-  = form_for [@question, @answer], remote: true do |f|
+  = form_for [@question, @answer], local: true do |f|
     = f.text_area :body, rows: 3
     = f.submit 'answer'

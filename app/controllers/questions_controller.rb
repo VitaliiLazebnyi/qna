@@ -48,10 +48,10 @@ class QuestionsController < ApplicationController
   private
 
   def check_user_permissions
-    return if @question&.user == current_user
+    return if current_user.author_of?(@question)
 
     render file: File.join(Rails.root, 'public/403.html'),
-           status: 403,
+           status: :forbidden,
            layout: false
   end
 

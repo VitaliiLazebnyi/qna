@@ -11,7 +11,7 @@ feature 'User can his answer from question', '
   given(:questioner) { create :user }
   given(:answerer)   { create :user }
   given(:question)   { create :question, user: questioner }
-  given!(:answer)     { create :answer, question: question, user: answerer }
+  given!(:answer)    { create :answer, question: question, user: answerer }
 
   scenario 'authenticated user removes his answer' do
     login answerer
@@ -19,9 +19,9 @@ feature 'User can his answer from question', '
     visit question_path(question)
 
     expect(page).to have_content answer.body
-    click_on "Delete answer"
+    click_on 'Delete answer'
     expect(page).to_not have_content answer.body
-    expect(page).to_not have_content "Delete answer"
+    expect(page).to_not have_content 'Delete answer'
   end
 
   scenario 'authenticated user removes others answer' do
@@ -30,13 +30,13 @@ feature 'User can his answer from question', '
     visit question_path(question)
 
     expect(page).to have_content answer.body
-    expect(page).to_not have_content "Delete answer"
+    expect(page).to_not have_content 'Delete answer'
   end
 
-  scenario "unauthenticated can't remove his answers" do
+  scenario "unauthenticated can't remove answers" do
     visit question_path(question)
 
     expect(page).to have_content answer.body
-    expect(page).to_not have_content "Delete answer"
+    expect(page).to_not have_content 'Delete answer'
   end
 end
