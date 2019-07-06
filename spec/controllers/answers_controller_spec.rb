@@ -14,8 +14,21 @@ RSpec.describe AnswersController, type: :controller do
       it 'saves new answer to database' do
         expect { post :create, params: { answer: answer, question_id: question.id } }
           .to change(Answer, :count).by(1)
+      end
 
-        expect(question&.answers&.first&.body).to eq answer[:body]
+      it 'new answer is linked to user' do
+        post :create, params: { answer: answer, question_id: question.id }
+        expect(Answer.first&.user_id).to eq user.id
+      end
+
+      it 'new answer is linked to question' do
+        post :create, params: { answer: answer, question_id: question.id }
+        expect(Answer.first&.question_id).to eq question.id
+      end
+
+      it 'new answer has proper body' do
+        post :create, params: { answer: answer, question_id: question.id }
+        expect(Answer.first&.body).to eq answer[:body]
       end
 
       it 'redirects to view page' do
