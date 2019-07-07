@@ -81,8 +81,7 @@ RSpec.describe AnswersController, type: :controller do
 
       it 'redirects to view page' do
         delete :destroy, params: { id: answer }
-        # TODO: i am not sure how correctly check rendered template here
-        expect(response).to render_template nil
+        expect(response).to render_template(file: "#{Rails.root}/public/403.html")
       end
 
       it 'returns forbidden http status code' do
@@ -99,8 +98,7 @@ RSpec.describe AnswersController, type: :controller do
 
       it 'redirects to view page' do
         delete :destroy, params: { id: answer }
-        # TODO: i am not sure how correctly check rendered template here
-        expect(response).to render_template nil
+        expect(response).to redirect_to new_user_session_path
       end
 
       it 'returns forbidden http status code' do

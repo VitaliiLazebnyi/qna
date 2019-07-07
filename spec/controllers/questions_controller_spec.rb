@@ -145,8 +145,7 @@ RSpec.describe QuestionsController, type: :controller do
 
       it 'redirects to forbidden page' do
         patch :update, params: { id: question.id, question: question_params }
-        # TODO: i am not sure how correctly check rendered template here
-        expect(response).to render_template nil
+        expect(response).to render_template(file: "#{Rails.root}/public/403.html")
       end
 
       it 'returns forbidden http status code' do
@@ -197,8 +196,7 @@ RSpec.describe QuestionsController, type: :controller do
 
       it 'redirects to view page' do
         delete :destroy, params: { id: question.id }
-        # TODO: i am not sure how correctly check rendered template here
-        expect(response).to render_template nil
+        expect(response).to render_template(file: "#{Rails.root}/public/403.html")
       end
 
       it 'returns forbidden http status code' do
