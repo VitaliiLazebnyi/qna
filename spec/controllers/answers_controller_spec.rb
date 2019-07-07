@@ -40,14 +40,14 @@ RSpec.describe AnswersController, type: :controller do
     context 'with invalid parameters' do
       let(:answer) { attributes_for(:answer, body: nil) }
 
-      it 'saves new answer to database' do
+      it 'not saves new answer to database' do
         expect { post :create, params: { answer: answer, question_id: question.id } }
           .to_not change(Answer, :count)
       end
 
       it 'displays new template' do
         post :create, params: { answer: answer, question_id: question.id }
-        expect(response).to redirect_to question
+        expect(response).to render_template 'questions/show'
       end
     end
   end

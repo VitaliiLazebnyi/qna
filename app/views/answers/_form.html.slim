@@ -1,4 +1,5 @@
 - if current_user
+  = render 'shared/errors', resource: @answer
   = form_for [@question, @answer], local: true do |f|
     = f.text_area :body, rows: 3
     = f.submit 'answer'
