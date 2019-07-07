@@ -21,7 +21,7 @@ feature 'User can his answer from question', '
     expect(page).to have_content answer.body
     click_on 'Delete answer'
     expect(page).to_not have_content answer.body
-    expect(page).to_not have_content 'Delete answer'
+    expect(page).to_not have_link 'Delete answer'
   end
 
   scenario 'authenticated user removes others answer' do
@@ -30,13 +30,13 @@ feature 'User can his answer from question', '
     visit question_path(question)
 
     expect(page).to have_content answer.body
-    expect(page).to_not have_content 'Delete answer'
+    expect(page).to_not have_link 'Delete answer'
   end
 
   scenario "unauthenticated can't remove answers" do
     visit question_path(question)
 
     expect(page).to have_content answer.body
-    expect(page).to_not have_content 'Delete answer'
+    expect(page).to_not have_link 'Delete answer'
   end
 end
