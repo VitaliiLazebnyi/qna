@@ -17,7 +17,7 @@ feature 'User can create questions', '
     click_on 'Ask question'
     fill_in 'Title', with: question.title
     fill_in 'Body', with: question.body
-    click_on :create
+    click_on 'create'
 
     expect(page).to have_content 'Your question was successfully created.'
     expect(page).to have_content question.title
@@ -29,7 +29,7 @@ feature 'User can create questions', '
 
     visit questions_path
     click_on 'Ask question'
-    click_on :create
+    click_on 'create'
 
     expect(page).to have_content 'error'
     expect(page).to have_content "Title can't be blank"

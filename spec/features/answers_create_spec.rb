@@ -17,7 +17,7 @@ feature 'User can answer the question', '
 
     visit question_path(question)
     fill_in :answer_body, with: answer.body
-    click_on :answer
+    click_on 'answer'
 
     expect(page).to have_content 'Your answer was successfully created.'
     expect(page).to have_content question.title
@@ -29,7 +29,7 @@ feature 'User can answer the question', '
     login answerer
 
     visit question_path(question)
-    click_on :answer
+    click_on 'answer'
 
     expect(page).to have_content "Error: answer can't be empty."
   end
