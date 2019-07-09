@@ -15,19 +15,19 @@ RSpec.describe User, type: :model do
     let(:resource) { Struct.new(:user_id) }
 
     it "it's author" do
-      expect(user.author_of?(resource.new(user.id))).to eq true
+      expect(user).to be_author_of(resource.new(user.id))
     end
 
     it 'it is not author' do
-      expect(user.author_of?(resource.new('other_user_id'))).to eq false
+      expect(user).to_not be_author_of(resource.new('other_user_id'))
     end
 
     it 'unexpected objects should return false' do
-      expect(user.author_of?('Some string')).to eq false
+      expect(user).to_not be_author_of('Some string')
     end
 
     it 'unsaved user should return false' do
-      expect(unsaved_user.author_of?(resource.new(nil))).to eq false
+      expect(user).to_not be_author_of(resource.new(nil))
     end
   end
 end

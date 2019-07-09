@@ -101,7 +101,7 @@ RSpec.describe AnswersController, type: :controller do
         expect(response).to redirect_to new_user_session_path
       end
 
-      it 'returns forbidden http status code' do
+      it 'returns redirect http status code' do
         delete :destroy, params: { id: answer.id }
         expect(response).to have_http_status(302)
       end
