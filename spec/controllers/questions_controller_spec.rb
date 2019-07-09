@@ -76,7 +76,7 @@ RSpec.describe QuestionsController, type: :controller do
 
       it 'links new question to logged in user' do
         post :create, params: { question: question }
-        expect(Question.first&.user_id).to eq user.id
+        expect(assigns(:question).user_id).to eq user.id
       end
 
       it 'redirects to view page' do

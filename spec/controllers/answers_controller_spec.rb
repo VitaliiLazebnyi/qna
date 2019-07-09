@@ -18,17 +18,17 @@ RSpec.describe AnswersController, type: :controller do
 
       it 'new answer is linked to user' do
         post :create, params: { answer: answer, question_id: question.id }
-        expect(Answer.first&.user_id).to eq user.id
+        expect(assigns(:answer).user_id).to eq user.id
       end
 
       it 'new answer is linked to question' do
         post :create, params: { answer: answer, question_id: question.id }
-        expect(Answer.first&.question_id).to eq question.id
+        expect(assigns(:answer).question_id).to eq question.id
       end
 
       it 'new answer has proper body' do
         post :create, params: { answer: answer, question_id: question.id }
-        expect(Answer.first&.body).to eq answer[:body]
+        expect(assigns(:answer).body).to eq answer[:body]
       end
 
       it 'redirects to view page' do
