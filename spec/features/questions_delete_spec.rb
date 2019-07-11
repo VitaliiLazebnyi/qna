@@ -6,7 +6,6 @@ feature 'User can remove a question', '
   To help others
   User can view a question
 ' do
-
   given(:owner)     { create :user }
   given(:user)      { create :user }
   given!(:question) { create :question, user: owner }

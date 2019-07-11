@@ -6,7 +6,6 @@ feature 'User can answer the question', '
   In order to share his knowledge
   User can answer some question
 ' do
-
   given(:questioner) { create :user }
   given(:answerer)   { create :user }
   given(:question)   { create :question, user: questioner }
