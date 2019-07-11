@@ -6,7 +6,6 @@ feature 'User can sign-in', '
   In order to ask questions
   User wants to enter the system
 ' do
-
   given!(:user) { FactoryBot.create(:user) }
 
   background { visit new_user_session_path }

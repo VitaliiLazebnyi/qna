@@ -7,7 +7,6 @@ feature 'User can his answer from question', '
   To fix the mistake
   User can remove his answer
 ' do
-
   given(:questioner) { create :user }
   given(:answerer)   { create :user }
   given(:question)   { create :question, user: questioner }

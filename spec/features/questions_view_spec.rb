@@ -6,7 +6,6 @@ feature 'User can view question', '
   To help others
   User can view a question
 ' do
-
   given(:user)      { create :user }
   given!(:question) { create :question, user: user }
   given!(:answer_1)   { create :answer, user: user, question: question }

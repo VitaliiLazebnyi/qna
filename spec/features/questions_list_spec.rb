@@ -6,7 +6,6 @@ feature 'User can see a list of questions', '
   In order to get help someone
   User can see a list of questions
 ' do
-
   given(:user)        { create :user }
   given!(:question_1) { create :question, user: user }
   given!(:question_2) { create :question, user: user }

@@ -6,7 +6,6 @@ feature 'User can sign up', '
   In order to login
   User wants to sign up
 ' do
-
   given(:user) { FactoryBot.build(:user) }
 
   background { visit new_user_registration_path }
