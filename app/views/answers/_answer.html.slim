@@ -1,0 +1,5 @@
+- if answer&.body&.present?
+    p
+      = answer.body
+      - if current_user&.author_of?(answer)
+        = link_to "Delete answer", answer, local: true, method: :delete
