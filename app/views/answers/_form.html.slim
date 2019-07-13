@@ -1,6 +1,6 @@
 - if current_user
   .answer_errors
     = render 'shared/errors', resource: @answer
-  = form_with model: [@question, @answer], local: true do |f|
+  = form_with model: [@question, @answer], remote: true do |f|
     = f.text_area :body, rows: 3
     = f.submit 'answer'
