@@ -12,28 +12,28 @@ RSpec.describe AnswersController, type: :controller do
       let(:answer) { attributes_for(:answer) }
 
       it 'saves new answer to database' do
-        expect { post :create, params: { answer: answer, question_id: question.id } }
+        expect { post :create, params: { answer: answer, question_id: question.id }, format: :js }
           .to change(Answer, :count).by(1)
       end
 
       it 'new answer is linked to user' do
-        post :create, params: { answer: answer, question_id: question.id }
+        post :create, params: { answer: answer, question_id: question.id }, format: :js
         expect(assigns(:answer).user_id).to eq user.id
       end
 
       it 'new answer is linked to question' do
-        post :create, params: { answer: answer, question_id: question.id }
+        post :create, params: { answer: answer, question_id: question.id }, format: :js
         expect(assigns(:answer).question_id).to eq question.id
       end
 
       it 'new answer has proper body' do
-        post :create, params: { answer: answer, question_id: question.id }
+        post :create, params: { answer: answer, question_id: question.id }, format: :js
         expect(assigns(:answer).body).to eq answer[:body]
       end
 
-      it 'redirects to view page' do
-        post :create, params: { answer: answer, question_id: question.id }
-        expect(response).to redirect_to question
+      it 'renders proper template' do
+        post :create, params: { answer: answer, question_id: question.id }, format: :js
+        expect(response).to render_template :create
       end
     end
 
@@ -41,13 +41,13 @@ RSpec.describe AnswersController, type: :controller do
       let(:answer) { attributes_for(:answer, body: nil) }
 
       it 'not saves new answer to database' do
-        expect { post :create, params: { answer: answer, question_id: question.id } }
+        expect { post :create, params: { answer: answer, question_id: question.id }, format: :js }
           .to_not change(Answer, :count)
       end
 
-      it 'displays new template' do
-        post :create, params: { answer: answer, question_id: question.id }
-        expect(response).to render_template 'questions/show'
+      it 'renders proper template' do
+        post :create, params: { answer: answer, question_id: question.id }, format: :js
+        expect(response).to render_template :create
       end
     end
   end
