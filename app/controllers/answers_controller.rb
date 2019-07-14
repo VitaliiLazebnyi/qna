@@ -10,6 +10,15 @@ class AnswersController < ApplicationController
     @answer   = @question.answers.create(answer_params.merge(user: current_user))
   end
 
+  def update
+    @answer = Answer.find(params[:id])
+    unless current_user.author_of?(@answer)
+      redirect_to @answer.question, error: "Error: answer can't be edited."
+      return
+    end
+    @answer.update(answer_params)
+  end
+
   def destroy
     if @answer.destroy
       redirect_to @answer.question, notice: 'Your answer was successfully removed.'
