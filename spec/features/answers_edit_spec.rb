@@ -47,7 +47,6 @@ feature 'User can edit the answer', '
 
         expect(page).to have_content answer.body
         expect(page).to have_selector 'textarea'
-        # byebug
       end
 
       expect(page).to have_content 'error(s) detected'
