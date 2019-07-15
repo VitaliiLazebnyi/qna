@@ -2,9 +2,9 @@
     p
       = answer.body
       - if current_user&.author_of?(answer)
-        = link_to 'Edit'
+        = link_to 'Edit', '#', class: 'edit-answer-link', data: { answer: answer.id }
         = link_to 'Delete answer', answer, local: true, method: :delete
 
-      = form_with model: answer, remote: true do |f|
+      = form_with model: answer, remote: true, class: 'hidden', html: { id: "edit-answer-#{answer.id}" }  do |f|
         = f.text_area :body, rows: 3
         = f.submit 'Save'
