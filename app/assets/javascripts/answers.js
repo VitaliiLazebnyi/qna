@@ -1,4 +1,4 @@
-function setEventOnEditAnsweLink(){
+function setEventOnEditAnswerLink(){
     $('.answers').on(
         'click',
         '.edit-answer-link',
@@ -12,5 +12,5 @@ function setEventOnEditAnsweLink(){
 }
 
 $(document).on("turbolinks:load",
-    setEventOnEditAnsweLink
+    setEventOnEditAnswerLink
 );

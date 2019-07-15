@@ -2,8 +2,8 @@
 
 class AnswersController < ApplicationController
   before_action :authenticate_user!
-  before_action :load_answer,            only: :destroy
-  before_action :check_user_permissions, only: :destroy
+  before_action :load_answer,            only: %i[update destroy]
+  before_action :check_user_permissions, only: %i[update destroy]
 
   def create
     @question = Question.find(params[:question_id])
@@ -11,11 +11,6 @@ class AnswersController < ApplicationController
   end
 
   def update
-    @answer = Answer.find(params[:id])
-    unless current_user.author_of?(@answer)
-      redirect_to @answer.question, error: "Error: answer can't be edited."
-      return
-    end
     @answer.update(answer_params)
   end
 

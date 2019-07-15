@@ -133,9 +133,14 @@ RSpec.describe AnswersController, type: :controller do
           .to_not change(Answer, :count)
       end
 
-      it 'redirects to question' do
-        patch :update, params: { id: answer, answer: edited_answer }, format: :js
-        expect(response).to redirect_to answer.question
+      it 'redirects to view page' do
+        delete :destroy, params: { id: answer }
+        expect(response).to render_template(file: "#{Rails.root}/public/403.html")
+      end
+
+      it 'returns forbidden http status code' do
+        delete :destroy, params: { id: answer.id }
+        expect(response).to have_http_status(403)
       end
     end
 

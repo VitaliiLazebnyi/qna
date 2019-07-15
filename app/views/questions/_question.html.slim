@@ -1,5 +1,12 @@
-h1= @question.title
-p= @question.body
+.question
+  h1= @question.title
+  p= @question.body
 
-- if current_user&.author_of?(@question)
-  = link_to 'Delete question', question_path(@question), method: :delete
+  - if current_user&.author_of?(@question)
+    = link_to 'Edit', '#', class: 'edit-question-link', data: { question_id: question.id }
+    = link_to 'Delete question', question_path(@question), method: :delete
+
+  = form_with model: question, remote: true, class: 'hidden', html: {id: "edit-question-#{question.id}"}  do |f|
+    = f.text_area :title
+    = f.text_area :body, rows: 3
+    = f.submit 'Save'
