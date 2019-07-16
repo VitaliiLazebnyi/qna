@@ -58,7 +58,7 @@ RSpec.describe AnswersController, type: :controller do
 
       it 'not saves new answer to database' do
         expect { post :create, params: { answer: answer, question_id: question.id }, format: :js }
-            .to_not change(Answer, :count)
+          .to_not change(Answer, :count)
       end
 
       it 'renders create template' do

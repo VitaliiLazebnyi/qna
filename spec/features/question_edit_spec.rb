@@ -6,7 +6,6 @@ feature 'User can edit his question', '
   In order to correct his mistake
   User can edit his questions
 ' do
-
   given(:question)        { create :question }
   given(:edited_question) { attributes_for :question }
   given(:asker)           { question.user }
