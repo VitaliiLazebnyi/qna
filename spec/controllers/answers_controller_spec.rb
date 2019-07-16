@@ -175,13 +175,13 @@ RSpec.describe AnswersController, type: :controller do
       before { login(author) }
 
       it 'saves new answer to database' do
-        expect { delete :destroy, params: { id: answer.id } }
+        expect { delete :destroy, params: { id: answer.id }, format: :js }
           .to change(Answer, :count).by(-1)
       end
 
       it 'redirects to view page' do
-        delete :destroy, params: { id: answer }
-        expect(response).to redirect_to question
+        delete :destroy, params: { id: answer }, format: :js
+        expect(response).to redirect_to answer
       end
     end
 
@@ -189,35 +189,35 @@ RSpec.describe AnswersController, type: :controller do
       before { login(user) }
 
       it 'saves new answer to database' do
-        expect { delete :destroy, params: { id: answer.id } }
+        expect { delete :destroy, params: { id: answer.id }, format: :js }
           .to_not change(Answer, :count)
       end
 
       it 'redirects to view page' do
-        delete :destroy, params: { id: answer }
+        delete :destroy, params: { id: answer }, format: :js
         expect(response).to render_template(file: "#{Rails.root}/public/403.html")
       end
 
       it 'returns forbidden http status code' do
-        delete :destroy, params: { id: answer.id }
+        delete :destroy, params: { id: answer.id }, format: :js
         expect(response).to have_http_status(403)
       end
     end
 
     context "visitor can't remove others questions" do
       it 'not changes answers number' do
-        expect { delete :destroy, params: { id: answer.id } }
+        expect { delete :destroy, params: { id: answer.id }, format: :js }
           .to_not change(Answer, :count)
       end
 
-      it 'redirects to view page' do
-        delete :destroy, params: { id: answer }
-        expect(response).to redirect_to new_user_session_path
+      it 'proper error message' do
+        delete :destroy, params: { id: answer }, format: :js
+        expect(response.body).to eq 'You need to sign in or sign up before continuing.'
       end
 
       it 'returns redirect http status code' do
-        delete :destroy, params: { id: answer.id }
-        expect(response).to have_http_status(302)
+        delete :destroy, params: { id: answer.id }, format: :js
+        expect(response).to have_http_status(401)
       end
     end
   end

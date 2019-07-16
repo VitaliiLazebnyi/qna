@@ -15,11 +15,7 @@ class AnswersController < ApplicationController
   end
 
   def destroy
-    if @answer.destroy
-      redirect_to @answer.question, notice: 'Your answer was successfully removed.'
-    else
-      redirect_to @answer.question, notice: "Error: answer can't be removed."
-    end
+    @answer.destroy
   end
 
   private

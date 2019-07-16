@@ -12,7 +12,7 @@ feature 'User can his answer from question', '
   given(:question)   { create :question, user: questioner }
   given!(:answer)    { create :answer, question: question, user: answerer }
 
-  scenario 'authenticated user removes his answer' do
+  scenario 'authenticated user removes his answer', js: true do
     login answerer
 
     visit question_path(question)
@@ -23,7 +23,7 @@ feature 'User can his answer from question', '
     expect(page).to_not have_link 'Delete answer'
   end
 
-  scenario 'authenticated user removes others answer' do
+  scenario 'authenticated user removes others answer', js: true do
     login questioner
 
     visit question_path(question)
@@ -32,7 +32,7 @@ feature 'User can his answer from question', '
     expect(page).to_not have_link 'Delete answer'
   end
 
-  scenario "unauthenticated can't remove answers" do
+  scenario "unauthenticated can't remove answers", js: true do
     visit question_path(question)
 
     expect(page).to have_content answer.body
