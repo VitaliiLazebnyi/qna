@@ -1,7 +1,8 @@
 - if answer&.body&.present?
-    p id="answer-#{answer.id}"
+    p.answer id="answer-#{answer.id}"
       = answer.body
       - if current_user&.author_of?(answer)
+        = link_to 'Make best', '#', class: 'make-best-answer-link', data: { answer_id: answer.id }, method: :put
         = link_to 'Edit', '#', class: 'edit-answer-link', data: { answer_id: answer.id }
         = link_to 'Delete answer', answer, remote: true, method: :delete
 

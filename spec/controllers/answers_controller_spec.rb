@@ -134,12 +134,12 @@ RSpec.describe AnswersController, type: :controller do
       end
 
       it 'redirects to view page' do
-        delete :destroy, params: { id: answer }
+        put :update, params: { id: answer.id, answer: edited_answer }, format: :js
         expect(response).to render_template(file: "#{Rails.root}/public/403.html")
       end
 
       it 'returns forbidden http status code' do
-        delete :destroy, params: { id: answer.id }
+        put :update, params: { id: answer.id, answer: edited_answer }, format: :js
         expect(response).to have_http_status(403)
       end
     end
@@ -165,6 +165,81 @@ RSpec.describe AnswersController, type: :controller do
       end
     end
   end
+
+  # ============
+  #
+  describe 'PATCH #best' do
+    let!(:answer) { create :answer }
+
+    context 'question owner' do
+      before { login(answer.question.user) }
+
+      it 'changes answer attributes' do
+        patch :best, params: { id: answer }, format: :js
+        answer.reload
+        expect(answer.best).to eq true
+      end
+
+      it 'leaves same answers number as was' do
+        expect { patch :best, params: { id: answer }, format: :js }
+          .to_not change(Answer, :count)
+      end
+
+      it 'renders update template' do
+        patch :best, params: { id: answer }, format: :js
+        byebug
+        expect(response).to render_template :best
+      end
+    end
+
+    context 'other user' do
+      let(:user) { create(:user) }
+      before { login(user) }
+
+      it 'not changes answer best status' do
+        patch :best, params: { id: answer }, format: :js
+        answer.reload
+        expect(answer.best).to eq false
+      end
+
+      it 'leaves same answers number as was' do
+        expect { patch :best, params: { id: answer }, format: :js }
+          .to_not change(Answer, :count)
+      end
+
+      it 'redirects to view page' do
+        patch :best, params: { id: answer }, format: :js
+        expect(response).to render_template(file: "#{Rails.root}/public/403.html")
+      end
+
+      it 'returns forbidden http status code' do
+        patch :best, params: { id: answer }, format: :js
+        expect(response).to have_http_status(403)
+      end
+    end
+
+    context 'visitor' do
+      let(:edited_answer) { attributes_for :answer }
+
+      it 'not changes answer attributes' do
+        patch :best, params: { id: answer }, format: :js
+        answer.reload
+        expect(answer.best).to eq false
+      end
+
+      it 'leaves same answers number as was' do
+        expect { patch :best, params: { id: answer }, format: :js }
+          .to_not change(Answer, :count)
+      end
+
+      it 'renders update template' do
+        patch :best, params: { id: answer }, format: :js
+        expect(response.body).to eq 'You need to sign in or sign up before continuing.'
+      end
+    end
+  end
+  #
+  # ============
 
   describe 'DELETE #destroy' do
     let(:author) { create :user }

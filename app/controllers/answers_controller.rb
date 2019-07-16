@@ -2,7 +2,7 @@
 
 class AnswersController < ApplicationController
   before_action :authenticate_user!
-  before_action :load_answer,            only: %i[update destroy]
+  before_action :load_answer,            only: %i[update best destroy]
   before_action :check_user_permissions, only: %i[update destroy]
 
   def create
@@ -12,6 +12,10 @@ class AnswersController < ApplicationController
 
   def update
     @answer.update(answer_params)
+  end
+
+  def best
+    @answer.best!
   end
 
   def destroy
