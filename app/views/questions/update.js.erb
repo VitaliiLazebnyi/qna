@@ -1,0 +1,8 @@
+$('.question_errors').html("<%= render 'shared/errors', resource: @question %>");
+
+<% if @question.errors.present? %>
+  $('.notice').html("");
+<% else %>
+  $('.notice').html("Your question was successfully edited.");
+  $('.question').html("<%= j render @question %>");
+<% end %>

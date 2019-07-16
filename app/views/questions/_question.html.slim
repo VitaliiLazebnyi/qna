@@ -6,6 +6,8 @@
     = link_to 'Edit', '#', class: 'edit-question-link', data: { question_id: question.id }
     = link_to 'Delete question', question_path(@question), method: :delete
 
+  .question_errors
+    = render 'shared/errors', resource: @question
   = form_with model: question, remote: true, class: 'hidden', html: {id: "edit-question-#{question.id}"}  do |f|
     = f.text_area :title
     = f.text_area :body, rows: 3

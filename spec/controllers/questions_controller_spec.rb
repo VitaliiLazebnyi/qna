@@ -110,12 +110,12 @@ RSpec.describe QuestionsController, type: :controller do
       before { login(owner) }
 
       it 'keeps questions number same' do
-        expect { patch :update, params: { id: question.id, question: question_params } }
+        expect { patch :update, params: { id: question.id, question: question_params }, format: :js }
           .to_not change(Question, :count)
       end
 
       it 'redirects to view page' do
-        patch :update, params: { id: question.id, question: question_params }
+        patch :update, params: { id: question.id, question: question_params }, format: :js
         expect(response).to redirect_to assigns(:question)
       end
     end
@@ -124,13 +124,13 @@ RSpec.describe QuestionsController, type: :controller do
       before { login(owner) }
 
       it 'keeps questions number same' do
-        expect { patch :update, params: { id: question.id, question: question_invalid_params } }
+        expect { patch :update, params: { id: question.id, question: question_invalid_params }, format: :js }
           .to_not change(Question, :count)
       end
 
       it 'redirects to view page' do
-        patch :update, params: { id: question.id, question: question_invalid_params }
-        expect(response).to render_template :new
+        patch :update, params: { id: question.id, question: question_invalid_params }, format: :js
+        expect(response).to render_template 'questions/update'
       end
     end
 
@@ -139,30 +139,35 @@ RSpec.describe QuestionsController, type: :controller do
       before { login(user) }
 
       it 'keeps questions number same' do
-        expect { patch :update, params: { id: question.id, question: question_params } }
+        expect { patch :update, params: { id: question.id, question: question_params }, format: :js }
           .to_not change(Question, :count)
       end
 
       it 'redirects to forbidden page' do
-        patch :update, params: { id: question.id, question: question_params }
+        patch :update, params: { id: question.id, question: question_params }, format: :js
         expect(response).to render_template(file: "#{Rails.root}/public/403.html")
       end
 
       it 'returns forbidden http status code' do
-        patch :update, params: { id: question.id, question: question_params }
+        patch :update, params: { id: question.id, question: question_params }, format: :js
         expect(response).to have_http_status(403)
       end
     end
 
     context "visitor can't edit questions" do
       it 'keeps questions number same' do
-        expect { patch :update, params: { id: question.id, question: question_params } }
+        expect { patch :update, params: { id: question.id, question: question_params }, format: :js }
           .to_not change(Question, :count)
       end
 
       it 'redirects to view page' do
-        patch :update, params: { id: question.id, question: question_params }
-        expect(response).to redirect_to new_user_session_path
+        patch :update, params: { id: question.id, question: question_params }, format: :js
+        expect(response.body).to eq 'You need to sign in or sign up before continuing.'
+      end
+
+      it 'redirects to view page' do
+        patch :update, params: { id: question.id, question: question_params }, format: :js
+        expect(response).to have_http_status(401)
       end
     end
   end
