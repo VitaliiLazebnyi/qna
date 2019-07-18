@@ -9,4 +9,8 @@ class Answer < ApplicationRecord
           dependent: :nullify
 
   validates :body, presence: true
+
+  def best?
+    question.best_answer_id == id
+  end
 end

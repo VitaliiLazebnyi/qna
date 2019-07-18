@@ -4,5 +4,5 @@ $('.answer_errors').html("<%= render 'shared/errors', resource: @answer %>");
   $('.notice').html("");
 <% else %>
   $('.notice').html("Your answer was successfully edited.");
-  $('.answers').html("<%= j render @answer.question.answers %>");
+  $('.answers').html("<%= j render @answer.question.sorted_answers %>");
 <% end %>

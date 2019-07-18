@@ -1,8 +1,12 @@
 - if answer&.body&.present?
     p.answer id="answer-#{answer.id}"
       = answer.body
+      - if current_user&.author_of?(answer.question)
+        - if answer.best?
+          .best_answer_mark The best answer!
+        - else
+          = link_to 'Make best', best_answer_question_path(answer.question, question: { best_answer_id: answer.id }), class: 'make-best-answer-link', method: :put, remote: true
       - if current_user&.author_of?(answer)
-        = link_to 'Make best', '#', class: 'make-best-answer-link', data: { answer_id: answer.id }, method: :put
         = link_to 'Edit', '#', class: 'edit-answer-link', data: { answer_id: answer.id }
         = link_to 'Delete answer', answer, remote: true, method: :delete
 

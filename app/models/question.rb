@@ -8,4 +8,8 @@ class Question < ApplicationRecord
 
   validates :title, presence: true
   validates :body, presence: true
+
+  def sorted_answers
+    answers.order("id = '#{best_answer_id}' DESC, updated_at ASC")
+  end
 end
