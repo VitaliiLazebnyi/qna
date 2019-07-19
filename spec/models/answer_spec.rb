@@ -8,18 +8,6 @@ RSpec.describe Answer, type: :model do
   it { should belong_to(:question) }
   it { should belong_to(:user) }
 
-  context 'check circular dependency absence' do
-    let!(:answer) { create :answer }
-    let!(:question) { answer.question }
-
-    it 'possible to destroy' do
-      answer.update!(best: true)
-      expect { answer.destroy! }
-        .to not_change(Question, :count)
-        .and change(Answer, :count).by(-1)
-    end
-  end
-
   describe '#make_best!' do
     context "when there's no best answer" do
       let!(:question) { create :question }
