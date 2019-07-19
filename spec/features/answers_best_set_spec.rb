@@ -53,7 +53,8 @@ feature 'User can choose the best answer', '
         click_on 'Make best'
       end
 
-      sleep 0.2
+      sleep 0.1
+
       expect(answer_3.body).to appear_before answer_1.body
       expect(answer_1.body).to appear_before answer_2.body
     end

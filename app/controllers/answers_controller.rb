@@ -16,8 +16,7 @@ class AnswersController < ApplicationController
   end
 
   def make_best
-    parent_question.answers.update_all(best: false)
-    @answer.update(best: true)
+    @answer.make_best!
   end
 
   def destroy

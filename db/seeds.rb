@@ -8,6 +8,6 @@
 #   movies = Movie.create([{ name: 'Star Wars' }, { name: 'Lord of the Rings' }])
 #   Character.create(name: 'Luke', movie: movies.first)
 
-user     = User.create(email: '4Smoke@gmail.com', password: '123456')
-question = Question.create(title: 'q title 1', body: 'q body 1', user: user)
-answer   = Answer.create(body: 'a body 1', question: question, user: user)
+user     = User.create!(email: '4Smoke@gmail.com', password: '123456')
+question = Question.create!(title: 'q title 1', body: 'q body 1', user: user)
+answer   = Answer.create!(body: 'a body 1', question: question, user: user)

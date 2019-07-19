@@ -166,8 +166,6 @@ RSpec.describe AnswersController, type: :controller do
     end
   end
 
-  # ============
-  #
   describe 'PATCH #best_answer' do
     let!(:answer) { create :answer }
     let(:question) { answer.question }
@@ -178,9 +176,8 @@ RSpec.describe AnswersController, type: :controller do
 
       it 'changes answer attributes' do
         patch :make_best, params: { id: answer.id }, format: :js
-        question.reload
         answer.reload
-        expect(answer.best?).to eq true
+        expect(answer).to be_best
       end
 
       it 'leaves same answers number as was' do
@@ -243,8 +240,6 @@ RSpec.describe AnswersController, type: :controller do
       end
     end
   end
-  #
-  # ============
 
   describe 'DELETE #destroy' do
     let(:author) { create :user }
