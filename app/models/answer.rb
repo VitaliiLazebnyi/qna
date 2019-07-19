@@ -9,6 +9,7 @@ class Answer < ApplicationRecord
 
   def make_best!
     question.answers.update_all(best: false)
+    reload
     update(best: true)
   end
 end
