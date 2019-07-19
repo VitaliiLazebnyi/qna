@@ -5,7 +5,7 @@ require 'rails_helper'
 feature 'User can choose the best answer', '
   To award most helpful answer user can make it "best"
 ' do
-  given(:question) { create :question}
+  given(:question) { create :question }
 
   context 'no best answer', js: true do
     given!(:answer_1) { create :answer, question: question }
@@ -16,7 +16,7 @@ feature 'User can choose the best answer', '
       login question.user
       visit question_path(question)
 
-      expect(body).to_not have_content "The best answer!"
+      expect(body).to_not have_content 'The best answer!'
       expect(answer_1.body).to appear_before answer_2.body
       expect(answer_2.body).to appear_before answer_3.body
 
@@ -25,7 +25,7 @@ feature 'User can choose the best answer', '
       end
 
       within "#answer-#{answer_2.id}" do
-        expect(body).to have_content "The best answer!"
+        expect(body).to have_content 'The best answer!'
       end
 
       expect(answer_2.body).to appear_before answer_1.body
@@ -35,11 +35,7 @@ feature 'User can choose the best answer', '
 
   context 'there is some best answer', js: true do
     given!(:answer_1) { create :answer, question: question }
-    given!(:answer_2) {
-      a = create :answer, question: question
-      question.update!(best_answer_id: a.id)
-      a
-    }
+    given!(:answer_2) { create :answer, question: question, best: true }
     given!(:answer_3) { create :answer, question: question }
 
     scenario 'best answer is on top' do

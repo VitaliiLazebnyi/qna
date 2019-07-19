@@ -33,10 +33,6 @@ class QuestionsController < ApplicationController
     @question.update(question_params)
   end
 
-  def best_answer
-    @question.update(best_answer_params)
-  end
-
   def destroy
     if @question.destroy
       redirect_to questions_path, notice: 'Your question was successfully removed.'
@@ -61,9 +57,5 @@ class QuestionsController < ApplicationController
 
   def question_params
     params.require(:question).permit(:title, :body)
-  end
-
-  def best_answer_params
-    params.require(:question).permit(:best_answer_id)
   end
 end

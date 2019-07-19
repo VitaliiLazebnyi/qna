@@ -166,6 +166,86 @@ RSpec.describe AnswersController, type: :controller do
     end
   end
 
+  # ============
+  #
+  describe 'PATCH #best_answer' do
+    let!(:answer) { create :answer }
+    let(:question) { answer.question }
+
+    context 'question owner' do
+      let(:user) { question.user }
+      before { login(user) }
+
+      it 'changes answer attributes' do
+        patch :make_best, params: { id: answer.id }, format: :js
+        question.reload
+        answer.reload
+        expect(answer.best?).to eq true
+      end
+
+      it 'leaves same answers number as was' do
+        expect { patch :make_best, params: { id: answer.id }, format: :js }
+          .to not_change(Answer, :count)
+          .and not_change(Question, :count)
+      end
+
+      it 'renders update template' do
+        patch :make_best, params: { id: answer.id }, format: :js
+        expect(response).to render_template :make_best
+      end
+    end
+
+    context 'other user' do
+      let(:user) { answer.user }
+      before { login(user) }
+
+      it 'not changes answer best status' do
+        patch :make_best, params: { id: answer.id }, format: :js
+        question.reload
+        answer.reload
+        expect(answer.best?).to eq false
+      end
+
+      it 'leaves same answers number as was' do
+        expect { patch :make_best, params: { id: answer.id }, format: :js }
+          .to not_change(Answer, :count)
+          .and not_change(Question, :count)
+      end
+
+      it 'redirects to view page' do
+        patch :make_best, params: { id: answer.id }, format: :js
+        expect(response).to render_template(file: "#{Rails.root}/public/403.html")
+      end
+
+      it 'returns forbidden http status code' do
+        patch :make_best, params: { id: answer.id }, format: :js
+        expect(response).to have_http_status(403)
+      end
+    end
+
+    context 'visitor' do
+      it 'not changes answer attributes' do
+        patch :make_best, params: { id: answer.id }, format: :js
+        question.reload
+        answer.reload
+        expect(answer.best?).to eq false
+      end
+
+      it 'leaves same answers number as was' do
+        expect { patch :make_best, params: { id: answer.id }, format: :js }
+          .to not_change(Answer, :count)
+          .and not_change(Question, :count)
+      end
+
+      it 'renders update template' do
+        patch :make_best, params: { id: answer.id }, format: :js
+        expect(response.body).to eq 'You need to sign in or sign up before continuing.'
+      end
+    end
+  end
+  #
+  # ============
+
   describe 'DELETE #destroy' do
     let(:author) { create :user }
     let(:user)   { create :user }
