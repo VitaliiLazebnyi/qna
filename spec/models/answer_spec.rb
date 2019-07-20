@@ -9,8 +9,9 @@ RSpec.describe Answer, type: :model do
   it { should belong_to(:user) }
 
   describe '#make_best!' do
+    let(:question) { create :question }
+
     context "when there's no best answer" do
-      let!(:question) { create :question }
       let!(:answer_1) { create :answer, question: question }
       let!(:answer_2) { create :answer, question: question }
 
@@ -26,7 +27,6 @@ RSpec.describe Answer, type: :model do
     end
 
     context 'when some other answer is already best' do
-      let!(:question) { create :question }
       let!(:answer_1) { create :answer, question: question, best: true }
       let!(:answer_2) { create :answer, question: question }
 
@@ -72,6 +72,19 @@ RSpec.describe Answer, type: :model do
         answer.reload
 
         expect(answer).to be_best
+      end
+    end
+
+    context "sortnig order" do
+      let!(:answer_1) { create :answer, question: question }
+      let!(:answer_2) { create :answer, question: question, best: true }
+
+      it "best first" do
+        expect(question.answers.first).to eq answer_2
+
+        answer_1.make_best!
+
+        expect(question.answers.first).to eq answer_1
       end
     end
   end

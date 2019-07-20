@@ -24,6 +24,8 @@ feature 'User can choose the best answer', '
         click_on 'Make best'
       end
 
+      sleep 0.1
+
       within "#answer-#{answer_2.id}" do
         expect(body).to have_content 'The best answer!'
       end
