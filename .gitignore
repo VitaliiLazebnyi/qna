@@ -5,3 +5,7 @@
 !/tmp/.keep
 .byebug_history
 db/*.sqlite3*
+
+# ignore files uploaded through active_record
+/storage/*
+!/storage/.keep
