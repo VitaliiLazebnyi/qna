@@ -2,26 +2,25 @@
 
 class AnswersController < ApplicationController
   before_action :authenticate_user!
-  before_action :load_answer,            only: :destroy
-  before_action :check_user_permissions, only: :destroy
+  before_action :load_answer, only: %i[update make_best destroy]
+  before_action :check_answer_permissions, only: %i[update destroy]
+  before_action :check_question_permissions, only: %i[make_best]
 
   def create
     @question = Question.find(params[:question_id])
-    @answer   = @question.answers.new(answer_params.merge(user: current_user))
+    @answer   = @question.answers.create(answer_params.merge(user: current_user))
+  end
 
-    if @answer.save
-      redirect_to @question, notice: 'Your answer was successfully created.'
-    else
-      render 'questions/show'
-    end
+  def update
+    @answer.update(answer_params)
+  end
+
+  def make_best
+    @answer.make_best!
   end
 
   def destroy
-    if @answer.destroy
-      redirect_to @answer.question, notice: 'Your answer was successfully removed.'
-    else
-      redirect_to @answer.question, notice: "Error: answer can't be removed."
-    end
+    @answer.destroy
   end
 
   private
@@ -30,9 +29,19 @@ class AnswersController < ApplicationController
     @answer = Answer.find(params[:id])
   end
 
-  def check_user_permissions
-    return if current_user.author_of?(@answer)
+  def check_answer_permissions
+    render_403 unless current_user.author_of?(@answer)
+  end
 
+  def check_question_permissions
+    render_403 unless current_user.author_of?(parent_question)
+  end
+
+  def parent_question
+    @parent_question ||= @answer.question
+  end
+
+  def render_403
     render file: File.join(Rails.root, 'public/403.html'),
            status: :forbidden,
            layout: false

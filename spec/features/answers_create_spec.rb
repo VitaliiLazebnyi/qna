@@ -11,7 +11,7 @@ feature 'User can answer the question', '
   given(:question)   { create :question, user: questioner }
   given(:answer)     { build  :answer }
 
-  scenario 'authenticated user creates an answer' do
+  scenario 'authenticated user creates an answer', js: true do
     login answerer
 
     visit question_path(question)
@@ -21,10 +21,12 @@ feature 'User can answer the question', '
     expect(page).to have_content 'Your answer was successfully created.'
     expect(page).to have_content question.title
     expect(page).to have_content question.body
-    expect(page).to have_content answer.body
+    within '.answers' do
+      expect(page).to have_content answer.body
+    end
   end
 
-  scenario 'authenticated user creates an answer with mistakes' do
+  scenario 'authenticated user creates an answer with mistakes', js: true do
     login answerer
 
     visit question_path(question)
@@ -34,7 +36,7 @@ feature 'User can answer the question', '
     expect(page).to have_content "Body can't be blank"
   end
 
-  scenario 'unauthenticated user creates a question' do
+  scenario 'unauthenticated user creates a question', js: true do
     visit question_path(question)
     expect(page).to_not have_content 'answer'
   end

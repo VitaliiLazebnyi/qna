@@ -1,0 +1,9 @@
+$('.answer_errors').html("<%= render 'shared/errors', resource: @answer %>");
+
+<% if @answer.errors.present? %>
+  $('.notice').html("");
+<% else %>
+  $('.notice').html("Your answer was successfully edited.");
+  $('<%= "#answer-#{@answer.id}" %>').html("<%= j render @answer %>");
+  $("form#edit-answer-<%= @answer.id %>").addClass('hidden');
+<% end %>

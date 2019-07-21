@@ -1,5 +1,15 @@
 - if answer&.body&.present?
-    p
+    p.answer id="answer-#{answer.id}"
       = answer.body
+      - if current_user&.author_of?(answer.question)
+        - if answer.best?
+          .best_answer_mark The best answer!
+        - else
+          = link_to 'Make best', make_best_answer_path(answer), class: 'make-best-answer-link', method: :patch, remote: true
       - if current_user&.author_of?(answer)
-        = link_to "Delete answer", answer, local: true, method: :delete
+        = link_to 'Edit', '#', class: 'edit-answer-link', data: { answer_id: answer.id }
+        = link_to 'Delete answer', answer, remote: true, method: :delete
+
+      = form_with model: answer, remote: true, class: 'hidden', html: { id: "edit-answer-#{answer.id}" }  do |f|
+        = f.text_area :body, rows: 3
+        = f.submit 'Save'

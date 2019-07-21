@@ -2,6 +2,7 @@
 
 FactoryBot.define do
   factory :question do
+    user
     title { "Question Title #{Time.now.to_f}" }
     body { "Question Body #{Time.now.to_f}" }
   end
