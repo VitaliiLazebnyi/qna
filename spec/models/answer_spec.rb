@@ -75,11 +75,11 @@ RSpec.describe Answer, type: :model do
       end
     end
 
-    context "sortnig order" do
+    context 'sortnig order' do
       let!(:answer_1) { create :answer, question: question }
       let!(:answer_2) { create :answer, question: question, best: true }
 
-      it "best first" do
+      it 'best first' do
         expect(question.answers.first).to eq answer_2
 
         answer_1.make_best!
