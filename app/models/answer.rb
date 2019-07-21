@@ -8,9 +8,8 @@ class Answer < ApplicationRecord
   default_scope { order(best: :desc) }
 
   def make_best!
-    ActiveRecord::Base.transaction do
-      question.answers.update_all(best: false)
-      reload
+    transaction do
+      question.answers.where.not(id: id).update_all(best: false)
       update!(best: true)
     end
   end
