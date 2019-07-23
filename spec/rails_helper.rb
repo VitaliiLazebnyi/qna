@@ -45,6 +45,10 @@ RSpec.configure do |config|
   config.include ControllerHelpers,               type: :controller
   config.include FeatureHelpers,                  type: :feature
 
+  config.after(:all) do
+    FileUtils.rm_rf("#{Rails.root}/tmp/storage")
+  end
+
   Capybara.javascript_driver = :selenium_chrome_headless
 
   # Remove this line if you're not using ActiveRecord or ActiveRecord fixtures
