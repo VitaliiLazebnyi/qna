@@ -7,7 +7,7 @@ feature 'User can view question', '
   User can view a question
 ' do
   given(:user)      { create :user }
-  given!(:question) { create :question, user: user }
+  given!(:question) { create :question, :with_file, { user: user }  }
   given!(:answer_1) { create :answer, user: user, question: question }
   given!(:answer_2) { create :answer, user: user, question: question }
 
