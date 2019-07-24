@@ -35,6 +35,7 @@ rescue ActiveRecord::PendingMigrationError => e
   puts e.to_s.strip
   exit 1
 end
+
 RSpec.configure do |config|
   config.include FactoryBot::Syntax::Methods
 
@@ -47,6 +48,10 @@ RSpec.configure do |config|
 
   config.after(:all) do
     FileUtils.rm_rf("#{Rails.root}/tmp/storage")
+  end
+
+  config.before(:all, type: :feature) do
+    Capybara.server = :puma, { Silent: true }
   end
 
   Capybara.javascript_driver = :selenium_chrome_headless
