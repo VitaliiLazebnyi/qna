@@ -40,6 +40,22 @@ feature 'User can edit his question', '
       end
     end
 
+    scenario 'can add files to his question', js: true do
+      login asker
+
+      visit question_path(question)
+
+      click_on 'Edit'
+
+      within '.question' do
+        attach_file 'Files', %W(#{Rails.root}/spec/rails_helper.rb #{Rails.root}/spec/spec_helper.rb)
+        click_on 'Save'
+      end
+
+      expect(page).to have_link 'rails_helper.rb'
+      expect(page).to have_link 'spec_helper.rb'
+    end
+
     scenario "can't edit his answer with invalid body", js: true do
       login asker
 

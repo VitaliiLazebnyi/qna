@@ -14,4 +14,6 @@
   = form_with model: question, remote: true, class: 'hidden', html: {id: "edit-question-#{question.id}"}  do |f|
     = f.text_area :title
     = f.text_area :body, rows: 3
+    = f.label :files
+    = f.file_field :files, multiple: true
     = f.submit 'Save'
