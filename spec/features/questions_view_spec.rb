@@ -20,7 +20,18 @@ feature 'User can view question', '
     expect(page).to have_content answer_2.body
   end
 
-  scenario 'user can remove attachments' do
+  scenario "visitor can't remove attachments", js: true do
+    visit question_path(question)
+
+    expect(page).to have_content 'rails_helper.rb'
+
+    within ".question .attachments" do
+      expect(page).to_not have_link 'Remove'
+    end
+  end
+
+  scenario 'user can remove attachments', js: true do
+    login user
     visit question_path(question)
 
     expect(page).to have_content 'rails_helper.rb'
