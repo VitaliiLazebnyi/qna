@@ -4,7 +4,7 @@
 
   .attachments
     - @question.files.each do |file|
-        p.answer id="attachment-#{file.id}"
+        p.attachment id="attachment-#{file.id}"
           = link_to file.filename.to_s, url_for(file)
           - if current_user&.author_of?(@question)
             = link_to 'Remove', attachment_path(file), remote: true, method: :delete

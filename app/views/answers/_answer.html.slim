@@ -1,6 +1,13 @@
 - if answer&.body&.present?
-    p.answer id="answer-#{answer.id}"
-      = answer.body
+    .answer id="answer-#{answer.id}"
+      .body
+        = answer.body
+      .attachments
+        - answer.files.each do |file|
+          .attachment id="attachment-#{file.id}"
+            = link_to file.filename.to_s, url_for(file)
+          - if current_user&.author_of?(answer)
+            = link_to 'Remove', attachment_path(file), remote: true, method: :delete
       - if current_user&.author_of?(answer.question)
         - if answer.best?
           .best_answer_mark The best answer!
@@ -9,7 +16,8 @@
       - if current_user&.author_of?(answer)
         = link_to 'Edit', '#', class: 'edit-answer-link', data: { answer_id: answer.id }
         = link_to 'Delete answer', answer, remote: true, method: :delete
-
       = form_with model: answer, remote: true, class: 'hidden', html: { id: "edit-answer-#{answer.id}" }  do |f|
         = f.text_area :body, rows: 3
+        = f.label :files
+        = f.file_field :files, multiple: true
         = f.submit 'Save'
