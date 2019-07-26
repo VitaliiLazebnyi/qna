@@ -54,7 +54,7 @@ RSpec.configure do |config|
     Capybara.server = :puma, { Silent: true }
   end
 
-  Capybara.javascript_driver = :selenium_chrome #_headless
+  Capybara.javascript_driver = :selenium_chrome_headless
 
   FactoryBot::SyntaxRunner.class_eval do
     include ActionDispatch::TestProcess
