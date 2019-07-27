@@ -18,7 +18,7 @@ class AttachmentsController < ApplicationController
   end
 
   def load_model
-    @model = @attachment.record_type.constantize.find(@attachment.record_id)
+    @model = @attachment.record
   end
 
   def check_permissions
