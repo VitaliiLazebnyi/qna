@@ -6,15 +6,15 @@ RSpec.describe AttachmentsController, type: :controller do
   describe 'DELETE #destroy' do
     let(:author) { create :user }
     let(:user)   { create :user }
-    let!(:question) { create :question, :with_file, { user: author } }
+    let!(:question) { create :question, :with_file, user: author }
     let!(:attachment) { question.files.first }
     context 'author removes his attachment' do
       before { login(author) }
 
       it 'attachment removed from database' do
         expect { delete :destroy, params: { id: attachment.id }, format: :js }
-            .to change(ActiveStorage::Attachment, :count).by(-1)
-            .and not_change(Question, :count)
+          .to change(ActiveStorage::Attachment, :count).by(-1)
+                                                       .and not_change(Question, :count)
       end
 
       it 'redirects to proper page' do
@@ -28,7 +28,7 @@ RSpec.describe AttachmentsController, type: :controller do
 
       it 'attachment removed from database' do
         expect { delete :destroy, params: { id: attachment.id }, format: :js }
-            .to_not change(Answer, :count)
+          .to_not change(Answer, :count)
       end
 
       it 'redirects to proper page' do
@@ -45,7 +45,7 @@ RSpec.describe AttachmentsController, type: :controller do
     context "visitor can't remove any attachments" do
       it 'not changes attachments number' do
         expect { delete :destroy, params: { id: attachment.id }, format: :js }
-            .to_not change(Answer, :count)
+          .to_not change(Answer, :count)
       end
 
       it 'proper error message' do

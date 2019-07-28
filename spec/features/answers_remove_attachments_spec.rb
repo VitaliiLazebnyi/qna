@@ -10,7 +10,7 @@ feature 'User can his answer from question', '
   given(:questioner) { create :user }
   given(:answerer)   { create :user }
   given(:question)   { create :question, user: questioner }
-  given!(:answer)    { create :answer, :with_file, { question: question, user: answerer } }
+  given!(:answer)    { create :answer, :with_file, question: question, user: answerer }
 
   scenario 'authenticated user removes attachments from his answer', js: true do
     login answerer

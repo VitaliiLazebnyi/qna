@@ -8,7 +8,6 @@ class Answer < ApplicationRecord
 
   validates :body, presence: true
 
-
   default_scope { order(best: :desc) }
 
   def make_best!
