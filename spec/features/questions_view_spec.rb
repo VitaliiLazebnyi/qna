@@ -8,8 +8,8 @@ feature 'User can view question', '
 ' do
   given(:user)      { create :user }
   given!(:question) { create :question, user: user }
-  given!(:answer_1)   { create :answer, user: user, question: question }
-  given!(:answer_2)   { create :answer, user: user, question: question }
+  given!(:answer_1) { create :answer, user: user, question: question }
+  given!(:answer_2) { create :answer, user: user, question: question }
 
   scenario 'user can view a question' do
     visit question_path(question)

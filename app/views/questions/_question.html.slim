@@ -2,6 +2,13 @@
   h1= @question.title
   p= @question.body
 
+  .attachments
+    - @question.files.each do |file|
+        p.attachment id="attachment-#{file.id}"
+          = link_to file.filename.to_s, url_for(file)
+          - if current_user&.author_of?(@question)
+            = link_to 'Remove', attachment_path(file), remote: true, method: :delete
+
   - if current_user&.author_of?(@question)
     = link_to 'Edit', '#', class: 'edit-question-link', data: { question_id: question.id }
     = link_to 'Delete question', question_path(@question), method: :delete
@@ -11,4 +18,6 @@
   = form_with model: question, remote: true, class: 'hidden', html: {id: "edit-question-#{question.id}"}  do |f|
     = f.text_area :title
     = f.text_area :body, rows: 3
+    = f.label :files
+    = f.file_field :files, multiple: true
     = f.submit 'Save'
