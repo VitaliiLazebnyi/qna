@@ -11,6 +11,7 @@ class QuestionsController < ApplicationController
 
   def new
     @question = current_user.questions.new
+    @question.links.build
   end
 
   def create

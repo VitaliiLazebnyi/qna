@@ -21,8 +21,8 @@ feature 'User can add links to the question', '
     fill_in 'Title', with: question.title
     fill_in 'Body', with: question.body
 
-    fill_in 'Link name', with: gist_title
-    fill_in 'URL', with: gist_url
+    fill_in 'Link title', with: gist_title
+    fill_in 'url', with: gist_url
 
     click_on 'create'
 

@@ -25,6 +25,11 @@ RSpec.describe QuestionsController, type: :controller do
       expect(assigns(:question)).to be_instance_of(Question)
     end
 
+    it 'allocates question variable' do
+      get :new
+      expect(assigns(:question).links.first).to be_instance_of(Link)
+    end
+
     it 'renders proper page' do
       get :new
       expect(response).to render_template :new
