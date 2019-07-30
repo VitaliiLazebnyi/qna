@@ -7,7 +7,6 @@ feature 'User can add links to the question', '
   As questioner I can add
   Links to my question
 ' do
-
   given(:user) { create(:user) }
   given(:gist_title) { 'My Gist' }
   given(:gist_url) { 'https://gist.github.com/VitaliyLazebny/86d0b284890cefd138f8f2fe210b8c82' }
@@ -26,7 +25,8 @@ feature 'User can add links to the question', '
 
     click_on 'create'
 
-    expect(page).to have_link gist_title, href: gist_url
+    within '.question' do
+      expect(page).to have_link gist_title, href: gist_url
+    end
   end
-
 end
