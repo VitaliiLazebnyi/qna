@@ -9,6 +9,11 @@
           - if current_user&.author_of?(@question)
             = link_to 'Remove', attachment_path(file), remote: true, method: :delete
 
+  .links
+    - @question.links.each do |link|
+      p.link id="attachment-#{link.id}"
+        = link_to link.title, link.url
+
   - if current_user&.author_of?(@question)
     = link_to 'Edit', '#', class: 'edit-question-link', data: { question_id: question.id }
     = link_to 'Delete question', question_path(@question), method: :delete

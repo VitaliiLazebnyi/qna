@@ -13,7 +13,7 @@ feature 'User can add links to the question', '
   given(:gist_url) { 'https://gist.github.com/VitaliyLazebny/86d0b284890cefd138f8f2fe210b8c82' }
   given(:question) { build(:question) }
 
-  scenario 'authenticated user creates a question with link' do
+  scenario 'authenticated user creates a question with link', js: true do
     login user
 
     visit questions_path
@@ -22,7 +22,7 @@ feature 'User can add links to the question', '
     fill_in 'Body', with: question.body
 
     fill_in 'Link title', with: gist_title
-    fill_in 'url', with: gist_url
+    fill_in 'Url', with: gist_url
 
     click_on 'create'
 
