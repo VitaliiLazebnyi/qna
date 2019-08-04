@@ -25,7 +25,7 @@ RSpec.describe QuestionsController, type: :controller do
       expect(assigns(:question)).to be_instance_of(Question)
     end
 
-    it 'allocates question variable' do
+    it 'allocates empty link variable at question' do
       get :new
       expect(assigns(:question).links.first).to be_instance_of(Link)
     end
@@ -59,6 +59,11 @@ RSpec.describe QuestionsController, type: :controller do
     it 'allocates question variable' do
       get :show, params: { id: question.id }
       expect(assigns(:question)).to eq question
+    end
+
+    it 'allocates empty link variable at answer' do
+      get :show, params: { id: question.id }
+      expect(assigns(:answer).links.first).to be_instance_of(Link)
     end
 
     it 'renders proper page' do

@@ -1,5 +1,5 @@
 class Link < ApplicationRecord
-  validates :title, :url, presence: true
+  belongs_to :linkable, polymorphic: true
 
-  belongs_to :question
+  validates :title, :url, presence: true
 end

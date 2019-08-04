@@ -6,9 +6,5 @@
   = f.text_area :body
   = f.label :files
   = f.file_field :files, multiple: true
-  = f.fields_for :links do |l|
-    = l.label :title, 'Link title'
-    = l.text_field :title
-    = l.label :url
-    = l.text_field :url
+  = render 'links/form', resource: f
   = f.submit :create

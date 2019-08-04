@@ -3,15 +3,11 @@
   p= @question.body
 
   .attachments
-    - @question.files.each do |file|
-        p.attachment id="attachment-#{file.id}"
-          = link_to file.filename.to_s, url_for(file)
-          - if current_user&.author_of?(@question)
-            = link_to 'Remove', attachment_path(file), remote: true, method: :delete
+    = render partial: "attachments/attachment", collection: @question.files
 
   .links
     - @question.links.each do |link|
-      p.link id="attachment-#{link.id}"
+      p.link id="link-#{link.id}"
         = link_to link.title, link.url
 
   - if current_user&.author_of?(@question)
