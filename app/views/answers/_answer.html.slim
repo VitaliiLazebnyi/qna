@@ -2,6 +2,8 @@
     .answer id="answer-#{answer.id}"
       .body
         = answer.body
+      .links
+        =render answer.links
       .attachments
         = render partial: "attachments/attachment", collection: answer.files
       - if current_user&.author_of?(answer.question)

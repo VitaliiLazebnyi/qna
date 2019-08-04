@@ -6,9 +6,7 @@
     = render partial: "attachments/attachment", collection: @question.files
 
   .links
-    - @question.links.each do |link|
-      p.link id="link-#{link.id}"
-        = link_to link.title, link.url
+    =render question.links
 
   - if current_user&.author_of?(@question)
     = link_to 'Edit', '#', class: 'edit-question-link', data: { question_id: question.id }

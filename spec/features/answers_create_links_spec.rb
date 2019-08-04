@@ -20,7 +20,7 @@ feature 'User can add links to the answer', '
     fill_in :answer_body, with: answer.body
     fill_in 'Link title', with: gist_title
     fill_in 'Url', with: gist_url
-    click_on 'answer'
+    click_on :answer
 
     within '.answers' do
       expect(page).to have_link gist_title, href: gist_url
