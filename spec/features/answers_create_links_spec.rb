@@ -13,7 +13,7 @@ feature 'User can add links to the answer', '
   given(:link_1)   { build(:link) }
   given(:link_2)   { build(:link) }
 
-  scenario 'authenticated user creates a answer with links', js: true do
+  scenario 'authenticated user creates an answer with links', js: true do
     login answerer
 
     visit question_path(question)
@@ -37,5 +37,23 @@ feature 'User can add links to the answer', '
       expect(page).to have_link link_1.title, href: link_1.url
       expect(page).to have_link link_2.title, href: link_2.url
     end
+    expect(page).to_not have_content 'Links url is invalid'
+  end
+
+  scenario 'authenticated user creates an answer with invalid link', js: true do
+    login answerer
+
+    visit question_path(question)
+    fill_in :answer_body, with: answer.body
+
+    within '#links' do
+      fill_in 'Link title', with: link_1.title
+      fill_in 'Url', with: 'invalid_url'
+    end
+
+    click_on :answer
+
+    expect(page).to_not have_link link_1.title, href: 'invalid_url'
+    expect(page).to have_content 'Links url is invalid'
   end
 end
