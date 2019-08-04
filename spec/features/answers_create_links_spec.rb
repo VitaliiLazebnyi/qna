@@ -7,13 +7,13 @@ feature 'User can add links to the answer', '
   As answerer I can add
   Links to my answer
 ' do
-  given(:answerer)   { create(:user) }
-  given(:question)   { create(:question) }
-  given(:answer)     { build(:answer) }
-  given(:link_1)       { build(:link) }
-  given(:link_2)       { build(:link) }
+  given(:answerer) { create(:user) }
+  given(:question) { create(:question) }
+  given(:answer)   { build(:answer) }
+  given(:link_1)   { build(:link) }
+  given(:link_2)   { build(:link) }
 
-  scenario 'authenticated user creates a answer with link', js: true do
+  scenario 'authenticated user creates a answer with links', js: true do
     login answerer
 
     visit question_path(question)
