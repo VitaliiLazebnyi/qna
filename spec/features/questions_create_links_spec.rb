@@ -11,6 +11,7 @@ feature 'User can add links to the question', '
   given(:question) { build(:question) }
   given(:link_1)   { build(:link) }
   given(:link_2)   { build(:link) }
+  given(:gist)     { build(:link, :gist) }
 
   scenario 'authenticated user creates a question with links', js: true do
     login user
@@ -37,6 +38,29 @@ feature 'User can add links to the question', '
     within '.question' do
       expect(page).to have_link link_1.title, href: link_1.url
       expect(page).to have_link link_2.title, href: link_2.url
+    end
+    expect(page).to_not have_content 'Links url is invalid'
+  end
+
+  scenario 'authenticated user creates a question with gist links', js: true do
+    login user
+
+    visit questions_path
+    click_on 'Ask question'
+    fill_in 'Title', with: question.title
+    fill_in 'Body', with: question.body
+
+    within '#links' do
+      fill_in 'Link title', with: gist.title
+      fill_in 'Url', with: gist.url
+      click_on 'add link'
+    end
+
+    click_on 'create'
+
+    within '.question' do
+      expect(page).to have_link gist.title, href: gist.url
+      expect(page).to have_content 'CREATE DATABASE test_guru;'
     end
     expect(page).to_not have_content 'Links url is invalid'
   end

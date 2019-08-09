@@ -1,2 +1,4 @@
 p.link id="link-#{link.id}"
   = link_to link.title, link.url
+  -if /gist\.github/.match(link.url)
+    == "<script src=\"#{link.url}.js\"></script>"
