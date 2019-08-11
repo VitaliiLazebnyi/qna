@@ -7,11 +7,12 @@ feature 'User can add links to the question', '
   As questioner I can add
   Links to my question
 ' do
-  given(:user)     { create(:user) }
-  given(:question) { build(:question) }
-  given(:link_1)   { build(:link) }
-  given(:link_2)   { build(:link) }
-  given(:gist)     { build(:link, :gist) }
+  given(:user)       { create(:user) }
+  given(:question)   { build(:question) }
+  given(:question_2) { create :question, user: user }
+  given(:link_1)     { build(:link) }
+  given(:link_2)     { build(:link) }
+  given(:gist)       { build(:link, :gist) }
 
   scenario 'authenticated user creates a question with links', js: true do
     login user
@@ -82,5 +83,25 @@ feature 'User can add links to the question', '
 
     expect(page).to_not have_link link_1.title, href: 'invalid_link'
     expect(page).to have_content 'Links url is invalid'
+  end
+
+  scenario 'authenticated user add a link to question during question edit', js: true do
+    login user
+
+    visit question_path(question_2)
+
+    within '.question' do
+      click_on 'Edit'
+    end
+
+    within '.question .link_fields' do
+      fill_in 'Link title', with: link_1.title
+      fill_in 'Url', with: link_1.url
+    end
+
+    click_on 'Save'
+
+    expect(page).to have_link link_1.title, href: link_1.url
+    expect(page).to_not have_content 'Links url is invalid'
   end
 end
