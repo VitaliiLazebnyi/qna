@@ -5,7 +5,7 @@
   .attachments
     = render partial: "attachments/attachment", collection: @question.files
 
-  .links
+  .link_fields
     =render question.links
 
   - if current_user&.author_of?(@question)

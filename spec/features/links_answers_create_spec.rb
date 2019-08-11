@@ -20,13 +20,13 @@ feature 'User can add links to the answer', '
     visit question_path(question)
     fill_in :answer_body, with: answer.body
 
-    within '.answer_form .links' do
+    within '.answer_form .link_fields' do
       fill_in 'Link title', with: link_1.title
       fill_in 'Url', with: link_1.url
       click_on 'add link'
     end
 
-    second_link_fields = find_all(".answer_form .links .nested-fields").last
+    second_link_fields = find_all(".answer_form .link_fields .nested-fields").last
     within second_link_fields do
       fill_in 'Link title', with: link_2.title
       fill_in 'Url', with: link_2.url
@@ -47,7 +47,7 @@ feature 'User can add links to the answer', '
     visit question_path(question)
     fill_in :answer_body, with: answer.body
 
-    within '.answer_form .links' do
+    within '.answer_form .link_fields' do
       fill_in 'Link title', with: link_1.title
       fill_in 'Url', with: 'invalid_url'
     end
@@ -64,19 +64,18 @@ feature 'User can add links to the answer', '
     visit question_path(answer_2.question)
     click_on 'Edit'
 
-    within '.answer_form .links' do
+    within '.answer .link_fields' do
       click_on 'add link'
     end
 
-    second_link_fields = find_all(".answer_form .links .nested-fields").last
+    second_link_fields = find_all(".answers .link_fields .nested-fields").last
     within second_link_fields do
       fill_in 'Link title', with: link_2.title
       fill_in 'Url', with: link_2.url
     end
-
     click_on 'Save'
 
-    within '.answers' do
+    within '.answers .links' do
       expect(page).to have_link link_2.title, href: link_2.url
     end
     expect(page).to_not have_content 'Links url is invalid'
