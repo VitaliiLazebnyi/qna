@@ -1,9 +1,10 @@
 - if current_user
-  .answer_errors
-    = render 'shared/errors', resource: @answer
-  = form_with model: [@question, @answer], remote: true do |f|
-    = f.text_area :body, rows: 3
-    = render 'links/links_form', resource: f
-    = f.label :files
-    = f.file_field :files, multiple: true
-    = f.submit 'answer'
+  .answer_form
+    .answer_errors
+      = render 'shared/errors', resource: @answer
+    = form_with model: [@question, @answer], remote: true do |f|
+      = f.text_area :body, rows: 3
+      = render 'links/links_form', resource: f
+      = f.label :files
+      = f.file_field :files, multiple: true
+      = f.submit 'answer'

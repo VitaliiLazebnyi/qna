@@ -18,4 +18,5 @@
         = f.text_area :body, rows: 3
         = f.label :files
         = f.file_field :files, multiple: true
+        = render 'links/links_form', resource: f
         = f.submit 'Save'

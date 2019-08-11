@@ -21,13 +21,13 @@ feature 'User can add links to the question', '
     fill_in 'Title', with: question.title
     fill_in 'Body', with: question.body
 
-    within '#links' do
+    within '.links' do
       fill_in 'Link title', with: link_1.title
       fill_in 'Url', with: link_1.url
       click_on 'add link'
     end
 
-    second_link_fields = find_all("#links .nested-fields").last
+    second_link_fields = find_all(".links .nested-fields").last
     within second_link_fields do
       fill_in 'Link title', with: link_2.title
       fill_in 'Url', with: link_2.url
@@ -50,7 +50,7 @@ feature 'User can add links to the question', '
     fill_in 'Title', with: question.title
     fill_in 'Body', with: question.body
 
-    within '#links' do
+    within '.links' do
       fill_in 'Link title', with: gist.title
       fill_in 'Url', with: gist.url
       click_on 'add link'
@@ -73,7 +73,7 @@ feature 'User can add links to the question', '
     fill_in 'Title', with: question.title
     fill_in 'Body', with: question.body
 
-    within '#links' do
+    within '.links' do
       fill_in 'Link title', with: link_1.title
       fill_in 'Url', with: 'invalid_link'
     end
