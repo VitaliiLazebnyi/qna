@@ -9,5 +9,9 @@ FactoryBot.define do
     trait :with_file do
       files { [fixture_file_upload(Rails.root.join('spec', 'rails_helper.rb'), 'text/plain')] }
     end
+
+    after :create do |q|
+      create_list :link, 1, linkable: q
+    end
   end
 end
