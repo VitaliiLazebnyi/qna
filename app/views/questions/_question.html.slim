@@ -2,11 +2,15 @@
   h1= @question.title
   p= @question.body
 
+  #award
+    - if @question.award
+      = render @question.award
+
   .attachments
     = render partial: "attachments/attachment", collection: @question.files
 
   .links
-    =render question.links
+    = render question.links
 
   - if current_user&.author_of?(@question)
     = link_to 'Edit', '#', class: 'edit-question-link', data: { question_id: question.id }
