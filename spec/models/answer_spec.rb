@@ -95,6 +95,24 @@ RSpec.describe Answer, type: :model do
       end
     end
 
+    context 'awards user who gave best answer when other user already holds the award' do
+      let!(:question) { create :question }
+      let!(:answer_1) { create :answer, question: question }
+      let!(:answer_2) { create :answer, question: question }
+      let!(:award)    { create :award, question: question, user: answer_1.user }
+      let(:user) { answer.user }
+
+      it do
+        expect(answer_1.user).to_not eq answer_2.user
+        expect(award.user).to eq answer_1.user
+
+        answer_2.make_best!
+        award.reload
+
+        expect(award.user).to eq answer_2.user
+      end
+    end
+
     context 'sorting order' do
       let!(:answer_1) { create :answer, question: question }
       let!(:answer_2) { create :answer, question: question, best: true }
