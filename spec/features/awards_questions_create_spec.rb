@@ -31,6 +31,7 @@ feature 'User can add links to the question', '
       expect(page.find('#award img')['src']).to have_content award.url
     end
     expect(page).to_not have_content 'Award url is invalid'
+    expect(Award.last.user).to be_nil
   end
 
   scenario 'authenticated user creates a question with invalid award', js: true do

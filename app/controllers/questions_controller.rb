@@ -63,6 +63,6 @@ class QuestionsController < ApplicationController
           .permit(:title, :body,
                   files: [],
                   links_attributes: %i[id title url _destroy],
-                  award_attributes: %i[id title url user_id _destroy])
+                  award_attributes: %i[id title url _destroy])
   end
 end
