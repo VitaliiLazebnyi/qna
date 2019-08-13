@@ -16,6 +16,7 @@ class Answer < ApplicationRecord
   def make_best!
     transaction do
       question.answers.where.not(id: id).update_all(best: false)
+      question.award&.update!(user_id: user.id)
       update!(best: true)
     end
   end

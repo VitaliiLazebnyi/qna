@@ -6,29 +6,31 @@ feature 'User can get award if he gave best answer', '
   In order to get feedback how good his answer was
   User can receive best answer award
 ' do
-  given(:user)     { create(:user) }
-  given(:award)    { create(:award) }
-  given(:question) { award.question }
+  given(:question)   { create :question }
+  given(:questioner) { question.user }
+  given!(:award)     { create :award, question: question, user: nil }
 
+  given(:user)       { create :user }
+  given(:answer)     { build  :answer }
 
   scenario 'authenticated user gets award when he gave best answer', js: true do
     login user
 
     visit question_path(question)
-    click_on 'Ask question'
-    fill_in 'Title', with: question.title
-    fill_in 'Body', with: question.body
+    fill_in :answer_body, with: answer.body
+    click_on 'answer'
 
-    within '.award_fields' do
-      fill_in 'Award title', with: award.title
-      fill_in 'Url', with: award.url
-    end
+    logout
+    login questioner
 
-    click_on 'create'
+    visit question_path(question)
+    click_on 'Make best'
+    logout
 
-    within '.question' do
-      expect(page.find('#award img')['src']).to have_content award.url
-    end
-    expect(page).to_not have_content 'Award url is invalid'
+    login user
+    visit awards_path
+    expect(page).to have_content award.question.title
+    expect(page).to have_content award.title
+    expect(page).to have_css("img[src*='#{award.url}']")
   end
 end
