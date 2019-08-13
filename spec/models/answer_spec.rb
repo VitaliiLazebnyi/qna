@@ -9,7 +9,6 @@ RSpec.describe Answer, type: :model do
   it { should belong_to(:user) }
   it { accept_nested_attributes_for :links }
 
-
   it 'have many attached files' do
     expect(Answer.new.files).to be_an_instance_of(ActiveStorage::Attached::Many)
   end
@@ -84,7 +83,7 @@ RSpec.describe Answer, type: :model do
     context 'awards user who gave best answer' do
       let!(:award)  { create :award, user: nil }
       let!(:answer) { create :answer, question: award.question }
-      let(:user)         { answer.user }
+      let(:user) { answer.user }
 
       it do
         expect(award.user).to be_nil

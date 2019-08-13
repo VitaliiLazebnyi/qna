@@ -7,7 +7,6 @@ feature 'User can remove links when he edits his answer', '
   User can remove his links
   By edition his answer
 ' do
-
   let(:answer)   { create :answer }
   let(:question) { answer.question }
   let(:user)     { answer.user }
