@@ -2,8 +2,7 @@
 
 FactoryBot.define do
   factory :award do
-    user
-    question { create :question, user: user}
+    question { create :question }
 
     sequence :title do |n|
       "google.com##{n}"
@@ -12,5 +11,9 @@ FactoryBot.define do
     sequence :url do |n|
       "https://www.google.com/search?q=#{n}"
     end
+
+    # after :create do |a|
+    #   a.user = a.question.user
+    # end
   end
 end

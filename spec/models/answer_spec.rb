@@ -81,7 +81,22 @@ RSpec.describe Answer, type: :model do
       end
     end
 
-    context 'sortnig order' do
+    context 'awards user who gave best answer' do
+      let!(:award)  { create :award, user: nil }
+      let!(:answer) { create :answer, question: award.question }
+      let(:user)         { answer.user }
+
+      it do
+        expect(award.user).to be_nil
+
+        answer.make_best!
+        award.reload
+
+        expect(award.user).to eq answer.user
+      end
+    end
+
+    context 'sorting order' do
       let!(:answer_1) { create :answer, question: question }
       let!(:answer_2) { create :answer, question: question, best: true }
 
