@@ -2,10 +2,11 @@
 
 require 'rails_helper'
 
-RSpec.describe Link, type: :model do
+RSpec.describe Award, type: :model do
   it { should validate_presence_of(:title) }
 
-  it { should belong_to(:linkable) }
+  it { should belong_to(:user).optional }
+  it { should belong_to(:question) }
 
   context '.url format validation' do
     it 'allows proper urls' do

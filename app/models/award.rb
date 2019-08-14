@@ -1,7 +1,8 @@
 # frozen_string_literal: true
 
-class Link < ApplicationRecord
-  belongs_to :linkable, polymorphic: true
+class Award < ApplicationRecord
+  belongs_to :user, optional: true
+  belongs_to :question
 
   validates :title, presence: true
   validates :url,

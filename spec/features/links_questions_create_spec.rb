@@ -28,7 +28,7 @@ feature 'User can add links to the question', '
       click_on 'add link'
     end
 
-    second_link_fields = find_all(".link_fields .nested-fields").last
+    second_link_fields = find_all('.link_fields .nested-fields').last
     within second_link_fields do
       fill_in 'Link title', with: link_2.title
       fill_in 'Url', with: link_2.url

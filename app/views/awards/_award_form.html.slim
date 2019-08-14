@@ -1,0 +1,6 @@
+.award_fields
+  = resource.fields_for :award do |award|
+    = award.label :title, 'Award title'
+    = award.text_field :title
+    = award.label :url
+    = award.text_field :url

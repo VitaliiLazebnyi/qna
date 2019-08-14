@@ -9,7 +9,6 @@ RSpec.describe Answer, type: :model do
   it { should belong_to(:user) }
   it { accept_nested_attributes_for :links }
 
-
   it 'have many attached files' do
     expect(Answer.new.files).to be_an_instance_of(ActiveStorage::Attached::Many)
   end
@@ -81,7 +80,40 @@ RSpec.describe Answer, type: :model do
       end
     end
 
-    context 'sortnig order' do
+    context 'awards user who gave best answer' do
+      let!(:award)  { create :award, user: nil }
+      let!(:answer) { create :answer, question: award.question }
+      let(:user) { answer.user }
+
+      it do
+        expect(award.user).to be_nil
+
+        answer.make_best!
+        award.reload
+
+        expect(award.user).to eq answer.user
+      end
+    end
+
+    context 'awards user who gave best answer when other user already holds the award' do
+      let!(:question) { create :question }
+      let!(:answer_1) { create :answer, question: question }
+      let!(:answer_2) { create :answer, question: question }
+      let!(:award)    { create :award, question: question, user: answer_1.user }
+      let(:user) { answer.user }
+
+      it do
+        expect(answer_1.user).to_not eq answer_2.user
+        expect(award.user).to eq answer_1.user
+
+        answer_2.make_best!
+        award.reload
+
+        expect(award.user).to eq answer_2.user
+      end
+    end
+
+    context 'sorting order' do
       let!(:answer_1) { create :answer, question: question }
       let!(:answer_2) { create :answer, question: question, best: true }
 
