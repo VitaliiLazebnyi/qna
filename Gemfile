@@ -29,7 +29,7 @@ gem 'turbolinks'
 gem 'jbuilder'
 
 # Reduces boot times through caching; required in config/boot.rb
-gem 'bootsnap', '>= 1.1.0', require: false
+gem 'bootsnap', require: false
 
 gem 'cocoon'
 
@@ -45,7 +45,7 @@ group :development, :test do
 
   gem 'factory_bot_rails'
   gem 'rails-controller-testing'
-  gem 'rspec-rails', '~> 3.8'
+  gem 'rspec-rails', '~> 4.0.0.beta4'
   gem 'shoulda-matchers'
 end
 
