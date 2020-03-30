@@ -9,3 +9,8 @@ db/*.sqlite3*
 # ignore files uploaded through active_record
 /storage/*
 !/storage/.keep
+
+# ignore RubyMine files
+.generators
+.rakeTasks
+/.idea/*
