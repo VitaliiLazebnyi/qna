@@ -56,7 +56,6 @@ RSpec.configure do |config|
 
   # js_driver = ENV['GUI'] == '1' ? :selenium_chrome : :selenium_chrome_headless
   js_driver = ENV['GUI'] == '1' ? :selenium : :selenium_headless
-  Capybara.default_driver    = js_driver
   Capybara.javascript_driver = js_driver
 
   FactoryBot::SyntaxRunner.class_eval do
