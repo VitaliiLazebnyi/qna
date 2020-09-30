@@ -33,7 +33,7 @@ RSpec.describe AttachmentsController, type: :controller do
 
       it 'redirects to proper page' do
         delete :destroy, params: { id: attachment.id }, format: :js
-        expect(response).to render_template(file: "#{Rails.root}/public/403.html")
+        expect(response.body).to eq IO.binread(File.join(Rails.root, 'public/403.html'))
       end
 
       it 'returns forbidden http status code' do

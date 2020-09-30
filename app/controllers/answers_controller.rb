@@ -42,9 +42,9 @@ class AnswersController < ApplicationController
   end
 
   def render_403
-    render file: File.join(Rails.root, 'public/403.html'),
-           status: :forbidden,
-           layout: false
+    send_file File.join(Rails.root, 'public/403.html'),
+              :type => 'text/html; charset=utf-8',
+              :status => :forbidden
   end
 
   def answer_params

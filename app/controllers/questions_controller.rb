@@ -49,9 +49,9 @@ class QuestionsController < ApplicationController
   def check_user_permissions
     return if current_user.author_of?(@question)
 
-    render file: File.join(Rails.root, 'public/403.html'),
-           status: :forbidden,
-           layout: false
+    send_file File.join(Rails.root, 'public/403.html'),
+            :type => 'text/html; charset=utf-8',
+            :status => :forbidden
   end
 
   def load_question
