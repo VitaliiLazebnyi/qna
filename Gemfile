@@ -1,4 +1,5 @@
 # frozen_string_literal: true
+
 source 'https://rubygems.org'
 git_source(:github) { |repo| "https://github.com/#{repo}.git" }
 
@@ -39,6 +40,13 @@ gem 'devise'
 
 gem 'jquery-rails'
 
+group :test do
+  # Adds support for Capybara system testing and selenium driver
+  gem 'capybara'
+  gem 'launchy'
+  gem 'webdrivers'
+end
+
 group :development, :test do
   gem 'byebug', platforms: %i[mri mingw x64_mingw]
 
@@ -57,13 +65,6 @@ group :development do
   # Spring speeds up development by keeping your application running in the background. Read more: https://github.com/rails/spring
   gem 'spring'
   gem 'spring-watcher-listen'
-end
-
-group :test do
-  # Adds support for Capybara system testing and selenium driver
-  gem 'capybara'
-  gem 'launchy'
-  gem 'webdrivers'
 end
 
 # Windows does not include zoneinfo files, so bundle the tzinfo-data gem

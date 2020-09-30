@@ -43,8 +43,8 @@ class AnswersController < ApplicationController
 
   def render_403
     send_file File.join(Rails.root, 'public/403.html'),
-              :type => 'text/html; charset=utf-8',
-              :status => :forbidden
+              type: 'text/html; charset=utf-8',
+              status: :forbidden
   end
 
   def answer_params

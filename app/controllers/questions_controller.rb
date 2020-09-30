@@ -50,8 +50,8 @@ class QuestionsController < ApplicationController
     return if current_user.author_of?(@question)
 
     send_file File.join(Rails.root, 'public/403.html'),
-            :type => 'text/html; charset=utf-8',
-            :status => :forbidden
+              type: 'text/html; charset=utf-8',
+              status: :forbidden
   end
 
   def load_question
