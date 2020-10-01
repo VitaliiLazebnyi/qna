@@ -12,7 +12,7 @@ FactoryBot.define do
 
     trait :gist do
       title { 'gist' }
-      url   { 'https://gist.github.com/VitaliyLazebny/8248b2620e839fdb1e5fcf3c8c0906fc' }
+      url   { 'https://gist.github.com/VitaliiLazebnyi/8248b2620e839fdb1e5fcf3c8c0906fc' }
     end
   end
 end
