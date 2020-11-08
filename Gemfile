@@ -42,6 +42,7 @@ gem 'react-rails'
 gem 'webpacker'
 
 gem 'devise'
+gem 'cancancan'
 
 gem 'jquery-rails'
 
